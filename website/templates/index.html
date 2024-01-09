@@ -1,0 +1,10 @@
+<nav style="display: flex; gap: 40px; background-color: pink; padding: 20px">
+    <a href="https://github.com/Derk-B/KrakenCluster">View source code on github</a>
+    <a href="/api/ping">Ping the api</a>
+</nav>
+<h1 style="font-family: sans-serif">This is an example of how you should use the templating engine for go gin</h1>
+<ul style="font-family: sans-serif">
+    {{ range .books }}
+        {{ template "book" . }}
+    {{ end }}
+</ul>
