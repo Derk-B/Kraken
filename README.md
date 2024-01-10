@@ -1,45 +1,40 @@
-# KrakenCluster
-Monorepo for software containerization assignment
+# Kraken
+Monorepo for Software Containerization project
 
-## Setup instructions
+## Dependencies
 Make sure you have installed:
-- Docker
+- Docker (Compose)
 - Go
 
+## Building & Running
 The docker-compose file creates 3 containers: api, web and db.
 
-First, build the web application by going to: `projectroot/web`.
-Then run: `go build`.
+1. Build the web application
+    ```bash
+    cd web
+    go build
+    ```
 
-Next, go to the root of your project and copy the `.env.example` file.
-Call the copy: `.env`, you can change the values inside that file if you like.
+2. Copy required environment file
+    ```bash
+    cp .env.example .env
+    # make changes to .env file
+    ```
 
-Then you should run:
-```bash
-# Linux
-docker-compose build
-docker-compose up -d
+3. Build & run the managed containers
+    ```bash
+    # build containers with latest code changes
+    docker compose build
+    # start managed containers
+    docker compose up -d
+    ```
 
-# Mac
-docker compose build
-docker compose up -d
-```
-
-If you want to view the website you have to visit the ip address of the web docker container.
-To do that run: `docker inspect web`.
-
-This will print the properties of the docker container, in there you will find the ipaddress.
-
-Visit this addres in your browser and you should see the website.
-
-You can do the same for the api. Inspect the api container and then make requests to that address.
-
-### Run the website and api without docker
-To run the api and website without using docker you must build both projects and run the binary, or call `go run .`
-
-So running the api is done going to the api directory. Then run `go run .`, or run `go build -o filename` and then `./filename`.
-
-Running the website is exactly the same, but make sure you are in the web directory when running the commands.
-
-## vscode
-Use the following extension for better highlighting in the html templates: Go Template Support by jinliming2
+4. Access each deployed component  
+   If you want to access the web interface or API, view the website you have to visit the hostname of the docker container.
+   Run:
+    ```bash
+    docker inspect web
+    docker inspect api
+    ```
+This will print the properties of the docker container, in there you will find the hostname. Visit this address in your
+browser and you should see the website or API.

@@ -27,3 +27,6 @@ out/
 .vscode
 
 .env
+
+# Ignore the built binary
+api-server
