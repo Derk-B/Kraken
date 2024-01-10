@@ -1,9 +1,8 @@
-package KrakenSite
+package api
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 func Run(engine *gin.Engine) {

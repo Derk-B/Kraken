@@ -1,24 +1,29 @@
 version: "3"
 services:
-    kraken:
-        ports:
-            - 80:80
-            - 443:443
-        build:
-            context: .
-            dockerfile: Dockerfile
-        volumes:
-            -   type: bind
-                source: ./out
-                target: /app/out
-                read_only: true
+  api:
+    build:
+      context: api
+      dockerfile: api/Dockerfile
+    container_name: api
+    ports:
+      - "80:80"
 
-            -   type: bind
-                source: ./nginx/nginx.conf
-                target: /etc/nginx/nginx.conf
-                read_only: true
+  web:
+    build:
+      context: web
+      dockerfile: web/Dockerfile
+    container_name: web
+    ports:
+      - "80:80"
+      - "443:443"
 
-            -   type: bind
-                source: ./website/static
-                target: /app/website/static
-                read_only: true
+  db:
+    container_name: db
+    image: postgres:14.1-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./db:/var/lib/postgresql/data
