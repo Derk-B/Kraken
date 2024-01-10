@@ -20,5 +20,8 @@
 # Go workspace file
 go.work
 
-# Output file
-KrakenSite
+# Ignore output file in any directory, not just the out directory
+**/KrakenSite
+
+# Output directory
+out/

@@ -1,0 +1,24 @@
+version: "3"
+services:
+    kraken:
+        ports:
+            - 80:80
+            - 443:443
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            -   type: bind
+                source: ./out
+                target: /app/out
+                read_only: true
+
+            -   type: bind
+                source: ./nginx/nginx.conf
+                target: /etc/nginx/nginx.conf
+                read_only: true
+
+            -   type: bind
+                source: ./website/static
+                target: /app/website/static
+                read_only: true
