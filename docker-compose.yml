@@ -3,15 +3,15 @@ services:
   api:
     build:
       context: api
-      dockerfile: api/Dockerfile
+      dockerfile: Dockerfile
     container_name: api
     ports:
-      - "80:80"
+      - "${API_PORT}:8888"
 
   web:
     build:
       context: web
-      dockerfile: web/Dockerfile
+      dockerfile: Dockerfile
     container_name: web
     ports:
       - "80:80"
@@ -21,9 +21,10 @@ services:
     container_name: db
     image: postgres:14.1-alpine
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=${PSQL_USERNAME}
+      - POSTGRES_PASSWORD=${PSQL_PASSWORD}
+      - POSTGRES_DB=${PSQL_DATABASE}
     ports:
-      - '5432:5432'
+      - '${PSQL_PORT}:5432'
     volumes:
       - ./db:/var/lib/postgresql/data

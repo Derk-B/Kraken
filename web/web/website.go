@@ -29,7 +29,7 @@ func Run(engine *gin.Engine) {
 		},
 	}
 
-	engine.LoadHTMLGlob("website/static/templates/*")
+	engine.LoadHTMLGlob("static/templates/*")
 
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", gin.H{
@@ -37,5 +37,5 @@ func Run(engine *gin.Engine) {
 		})
 	})
 
-	r.StaticFile("/favicon.ico", "website/static/assets/favicon.ico")
+	r.StaticFile("/favicon.ico", "static/assets/favicon.ico")
 }

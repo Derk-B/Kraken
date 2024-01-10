@@ -20,11 +20,10 @@
 # Go workspace file
 go.work
 
-# Ignore output file in any directory, not just the out directory
-**/KrakenSite
-
 # Output directory
 out/
 
 .idea
 .vscode
+
+.env

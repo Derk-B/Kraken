@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"kraken/web/web"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {

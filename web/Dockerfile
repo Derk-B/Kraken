@@ -1,9 +1,6 @@
 FROM nginx:latest
 
-WORKDIR /app
+COPY ./static/ /app/static
+COPY ./out/ /app/out
 
-COPY ./nginx/startup.sh /app/.
-
-RUN chmod +x ./startup.sh
-
-CMD ["./startup.sh"]
+# CMD ["./app/out/web"]
