@@ -1,0 +1,30 @@
+version: "3"
+services:
+  api:
+    build:
+      context: api
+      dockerfile: Dockerfile
+    container_name: api
+    ports:
+      - "${API_PORT}:8888"
+
+  web:
+    build:
+      context: web
+      dockerfile: Dockerfile
+    container_name: web
+    ports:
+      - "80:80"
+      - "443:443"
+
+  db:
+    container_name: db
+    image: postgres:14.1-alpine
+    environment:
+      - POSTGRES_USER=${PSQL_USERNAME}
+      - POSTGRES_PASSWORD=${PSQL_PASSWORD}
+      - POSTGRES_DB=${PSQL_DATABASE}
+    ports:
+      - '${PSQL_PORT}:5432'
+    volumes:
+      - ./db:/var/lib/postgresql/data

@@ -20,5 +20,13 @@
 # Go workspace file
 go.work
 
-# Output file
-KrakenSite
+# Output directory
+out/
+
+.idea
+.vscode
+
+.env
+
+# Ignore the built binary
+api-server

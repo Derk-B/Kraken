@@ -1,8 +1,7 @@
 package main
 
 import (
-	api "KrakenSite/api"
-	website "KrakenSite/website"
+	"kraken/web/web"
 
 	"github.com/gin-gonic/gin"
 )
@@ -10,9 +9,10 @@ import (
 func main() {
 
 	r := gin.Default()
+	web.Run(r)
 
-	api.Run(r)
-	website.Run(r)
-
-	r.Run()
+	err := r.Run()
+	if err != nil {
+		return
+	}
 }

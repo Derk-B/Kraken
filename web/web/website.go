@@ -1,4 +1,4 @@
-package KrakenSite
+package web
 
 import (
 	"net/http"
@@ -14,7 +14,7 @@ type Book struct {
 
 func Run(engine *gin.Engine) {
 
-	r := engine.Group("/")
+	r := engine.Group("")
 
 	books := []Book{
 		{
@@ -29,11 +29,13 @@ func Run(engine *gin.Engine) {
 		},
 	}
 
-	engine.LoadHTMLGlob("website/templates/*")
+	engine.LoadHTMLGlob("static/templates/*")
 
-	r.GET("", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.tmpl", gin.H{
+	r.GET("/", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.html", gin.H{
 			"books": books,
 		})
 	})
+
+	r.StaticFile("/favicon.ico", "static/assets/favicon.ico")
 }

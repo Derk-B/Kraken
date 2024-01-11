@@ -1,4 +1,4 @@
-package KrakenSite
+package api
 
 import (
 	"net/http"
