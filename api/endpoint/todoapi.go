@@ -2,19 +2,18 @@ package api
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 	"github.com/uptrace/bun"
-	"github.com/uptrace/bun/dialect/pgdialect"
-	"github.com/uptrace/bun/driver/pgdriver"
 )
 
 type Todo struct {
-	Id          int
+	bun.BaseModel `bun:"table:blogposts`
+
+	Id          int64 `bun:",pk,autoincrement"`
 	Title       string
 	Description string
 	Userid      int
@@ -29,25 +28,7 @@ type TodosResponse struct {
 	Data   TodosData
 }
 
-func Run(r *gin.Engine) {
-	// Get env variables for connection string
-	envFile, err := godotenv.Read("../.env")
-
-	if err != nil {
-		fmt.Println("Could not load env file")
-	}
-
-	PSQL_PORT := envFile["PSQL_PORT"]
-	PSQL_USERNAME := envFile["PSQL_USERNAME"]
-	PSQL_PASSWORD := envFile["PSQL_PASSWORD"]
-	PSQL_DATABASE := envFile["PSQL_DATABASE"]
-
-	dsn := "postgres://" + PSQL_USERNAME + ":" + PSQL_PASSWORD + "@localhost:" + PSQL_PORT + "/" + PSQL_DATABASE + "?sslmode=disable"
-	sqldb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(dsn)))
-	defer sqldb.Close()
-	defer context.Background().Done()
-
-	db := bun.NewDB(sqldb, pgdialect.New())
+func Run(r *gin.Engine, db *bun.DB) {
 
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
@@ -88,15 +69,88 @@ func Run(r *gin.Engine) {
 	})
 
 	r.POST("/todo", func(c *gin.Context) {
+		userid := 0 // TODO: Retrieve actual userid
 
+		// Userid is always a positive number.
+		// If it is -1 then then no userid could be found an the user is unauthorized
+		if userid == -1 {
+			c.JSON(http.StatusOK, gin.H{
+				"status":  "Unauthorized",
+				"message": "You are unauthorized",
+			})
+			return
+		}
+
+		// Get new todo from body
+		title := c.PostForm("title")
+		desc := c.PostForm("description")
+
+		todo := Todo{
+			Title:       title,
+			Description: desc,
+			Userid:      userid,
+		}
+
+		// Store new todo in DB
+		_, err := db.NewInsert().Model(&todo).Exec(context.Background())
+
+		if err != nil {
+			fmt.Println(err)
+			c.JSON(http.StatusOK, gin.H{
+				"status":  "Fail",
+				"message": "Error while adding todo",
+			})
+			return
+		}
+
+		// Send response
 		c.JSON(http.StatusOK, gin.H{
-			"message": "ok",
+			"status":  "Success",
+			"message": "Todo added successfully",
 		})
 	})
 
-	r.DELETE("/todo", func(c *gin.Context) {
+	r.DELETE("/todo/:todoid", func(c *gin.Context) {
+		userid := 0 // TODO: Retrieve actual userid
+
+		// Parse id of todo from the request
+		req_todoid, err := strconv.Atoi(c.Param("todoid"))
+
+		if err != nil {
+			fmt.Println(err)
+			c.JSON(http.StatusOK, gin.H{
+				"status":  "Fail",
+				"message": "Error while deleting todo",
+			})
+			return
+		}
+
+		// Delete todo from database
+		todo := new(Todo)
+		res, err := db.NewDelete().Model(todo).Where("id = ?", req_todoid).Where("userId = ?", userid).Exec(context.Background())
+
+		rowsAffected, err2 := res.RowsAffected()
+
+		if err != nil || err2 != nil {
+			fmt.Println(err)
+			c.JSON(http.StatusOK, gin.H{
+				"status":  "Fail",
+				"message": "Error while deleting todo",
+			})
+			return
+		}
+
+		if rowsAffected == 0 {
+			c.JSON(http.StatusOK, gin.H{
+				"status":  "Fail",
+				"message": "Unable to delete todo",
+			})
+			return
+		}
+
 		c.JSON(http.StatusOK, gin.H{
-			"message": "ok",
+			"status":  "Success",
+			"message": "Todo deleted successfully",
 		})
 	})
 }
