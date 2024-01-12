@@ -7,5 +7,5 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o api-server
 
 FROM alpine:latest AS production
 COPY --from=builder /app .
-EXPOSE 80
+EXPOSE 8888
 ENTRYPOINT ["./api-server"]

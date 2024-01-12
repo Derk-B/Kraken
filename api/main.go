@@ -12,7 +12,7 @@ func main() {
 
 	api.Run(r)
 
-	err := r.Run("localhost:8888")
+	err := r.Run("0.0.0.0:8888")
 	if err != nil {
 		return
 	}

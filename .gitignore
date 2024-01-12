@@ -30,3 +30,4 @@ out/
 
 # Ignore the built binary
 api-server
+db/
