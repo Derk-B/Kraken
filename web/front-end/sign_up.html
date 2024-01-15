@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LogIn</title>
+    <title>SignUp</title>
     <link rel="stylesheet" type="text/css" href="./style.css" />
     <script
       src="https://kit.fontawesome.com/64d58efce2.js"
@@ -29,27 +29,33 @@
 
           <!-- LogIn form -->
           <div class="login">
-            <form action="" class="sign-in-form">
-              <h2 class="title">Log In</h2>
+            <form action="" class="sign-up-form">
+              <h2 class="title">Sign Up</h2>
               <div class="input-field">
                 <i class="fas fa-user"></i>
                 <input type="text" placeholder="Username" />
               </div>
               <div class="input-field">
+                <i class="fas fa-envelope"></i>
+                <input type="email" placeholder="Email" />
+              </div>
+              <div class="input-field">
                 <i class="fas fa-lock"></i>
                 <input type="password" placeholder="Password" />
               </div>
-              <input type="submit" value="Login" class="btn solid" />
+              <input type="submit" value="Sign Up" class="btn solid" />
             </form>
 
             <div class="login_to_signup">
               <div class="content">
-                  <p>Don't have an account? <button class="" id="sign-up-btn">Sign Up</button> </p>
+                  <p>Already have an account? <button class="" id="log-in-btn" onclick="redirectToLogIn()">Log In</button> </p>
               </div>
           </div>
 
           </div>
         </div>
       </div>
+
+      <script src="./app.js"></script>
     </body>
 </html>

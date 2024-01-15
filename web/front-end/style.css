@@ -88,19 +88,19 @@ input {
     grid-row: 1 / 2;
   }
   
-  form.sign-up-form {
-    opacity: 0;
-    z-index: 1;
-  }
-  
-  form.sign-in-form {
-    z-index: 2;
-  }
+
   
   .title {
     font-size: 2.2rem;
     color: #444;
     margin-bottom: 10px;
+  }
+
+  .landing_title {
+    font-size: 2.2rem;
+    color: #444;
+    margin-bottom: 10px;
+    
   }
   
   .input-field {
@@ -140,7 +140,7 @@ input {
   }
   
   .btn {
-    width: 150px;
+    width: 200px;
     background-color: #5995fd;
     border: none;
     outline: none;
@@ -183,8 +183,47 @@ input {
       border: none;
   outline: none; 
   }
-  
-  
+
   .login_to_signup button:hover {
     color: #4d84e2;
+  }
+
+  .landing_to_login button {
+    padding: 10px ;
+      font-size: 15px;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      text-decoration: underline;
+      background-color: #FFF9F9; 
+      transition: background-color 0.3s, color 0.3s;
+      border: none;
+      outline: none; 
+  }
+  
+  .landing_to_login button:hover {
+    color: #4d84e2;
+  }
+
+  .landing_to_login .content {
+    margin-top: 40px;
+    text-align: center;
+  }
+  
+ 
+
+  .landing_title {
+    text-align: center;
+  }
+
+  .DoItNow {
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        left: 65%;
+        width: 35%;  /* control paragragh size */
+        transition: 1s 0.7s ease-in-out;
+        display: grid;
+        grid-template-columns: 1fr;
+        z-index: 5;
   }
