@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SignUp</title>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- Logo Container -->
+        <div class="logo-container">
+            <div class="logo">
+
+                <img src="./img/logo.svg" alt="Website Logo" class="logo-image">
+            </div>
+
+
+            <div class="logout_container">
+
+                <a class="logout_button" href="landing_page.html">
+                    <img src="./img/logout_button.svg" alt="logout button">
+
+                    <div class="logout">LOGOUT</div>
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="to_do_list_container">
+
+            <div class="to_do_box">
+
+                <div class="quotes-container" id="quotes-container">
+                    <p class="quote" id="quote">
+                    </p>
+                </div>
+
+
+                <div class="todo_form">
+                    <form id="todo_form">
+                        <input type="text" class="todo_input" id="todo_input" placeholder="Enter your todo"
+                            autocomplete="off">
+                        <ul class="todos" id="todos"></ul>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+
+        <small>Left click to toggle completed. <br> Right click to delete todo</small>
+    </div>
+
+    <script src="./app.js"></script>
+
+</body>
+
+</html>

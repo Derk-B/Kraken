@@ -1,61 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SignUp</title>
-    <link rel="stylesheet" type="text/css" href="./style.css" />
-    <script
-      src="https://kit.fontawesome.com/64d58efce2.js"
-      crossorigin="anonymous"
-    ></script>
-  </head>
 
-    <body>
-      <div class="container">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SignUp</title>
+  <link rel="stylesheet" type="text/css" href="./style.css" />
+  <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+</head>
 
-        <!-- Logo Container -->
-        <div class="logo-container">
-          <div class="logo">
-            <img src="./img/logo.svg" alt="Website Logo" class="logo-image">
-          </div>
-        </div>
+<body>
+  <div class="container">
 
-        <div class="forms-container">
-          <!-- image -->
-          <div class="left-panel">   
-            <img src="./img/wizard.svg" alt="Left Panel Image" class="left-image">
-          </div>
+    <!-- Logo Container -->
+    <div class="logo-container">
+      <div class="logo">
+        <img src="./img/logo.svg" alt="Website Logo" class="logo-image">
+      </div>
+    </div>
 
-          <!-- LogIn form -->
-          <div class="login">
-            <form action="" class="sign-up-form">
-              <h2 class="title">Sign Up</h2>
-              <div class="input-field">
-                <i class="fas fa-user"></i>
-                <input type="text" placeholder="Username" />
-              </div>
-              <div class="input-field">
-                <i class="fas fa-envelope"></i>
-                <input type="email" placeholder="Email" />
-              </div>
-              <div class="input-field">
-                <i class="fas fa-lock"></i>
-                <input type="password" placeholder="Password" />
-              </div>
-              <input type="submit" value="Sign Up" class="btn solid" />
-            </form>
-
-            <div class="login_to_signup">
-              <div class="content">
-                  <p>Already have an account? <button class="" id="log-in-btn" onclick="redirectToLogIn()">Log In</button> </p>
-              </div>
-          </div>
-
-          </div>
-        </div>
+    <div class="forms-container">
+      <!-- image -->
+      <div class="left-panel">
+        <img src="./img/wizard.svg" alt="Left Panel Image" class="left-image">
       </div>
 
-      <script src="./app.js"></script>
-    </body>
+      <!-- LogIn form -->
+      <div class="login">
+        <form action="" class="sign-up-form">
+          <h2 class="title">Sign Up</h2>
+          <div class="input-field">
+            <i class="fas fa-user"></i>
+            <input type="text" placeholder="Username" />
+          </div>
+          <div class="input-field">
+            <i class="fas fa-envelope"></i>
+            <input type="email" placeholder="Email" />
+          </div>
+          <div class="input-field">
+            <i class="fas fa-lock"></i>
+            <input type="password" placeholder="Password" />
+          </div>
+          <input type="submit" value="Sign Up" class="btn solid" onclick="redirectToMain(event)" />
+        </form>
+
+        <div class="login_to_signup">
+          <div class="content">
+            <p>Already have an account? <button class="" id="log-in-btn" onclick="redirectToLogIn()">Log In</button>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+
 </html>
