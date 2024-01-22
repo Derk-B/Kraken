@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kraken-api-deployment
+  labels:
+    app: kraken-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kraken-api
+  template:
+    metadata:
+      labels:
+        app: kraken-api
+    spec:
+      containers:
+      - name: kraken-api-container
+        image: localhost:32000/kraken_api:latest
+        ports:
+        - containerPort: 8888
