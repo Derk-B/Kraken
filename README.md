@@ -104,3 +104,23 @@ kubectl get svc
 ```
 This should print the ip of the clusterIp (kraken-api-service)
 Navigate to this api in your browser: `[clusterip]:8080/ping`, this should return `{"message":"pong"}`
+
+## Load balander and ingress
+Run the following command
+
+`microk8s enable ingress; microk8s enable metallb`
+
+Metallb will ask you for a range of ip addresses, type: `10.50.100.5-10.50.100.25`
+```bash
+Enter each ip addresses range: 10.50.100.5-10.50.100.25
+```
+
+Now apply the yaml files for ingress and metallb
+`kubectl apply -f loadbalancer.yaml`
+`kubectl apply -f ingress.yaml`
+
+Test this using curl:
+```
+curl localhost/ping
+{"message":"pong"}
+```
