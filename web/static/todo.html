@@ -2,64 +2,49 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>My To-dos</title>
-    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <link rel="stylesheet" type="text/css" href="./style.css"/>
     <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div class="container">
+<div class="container">
 
-        <!-- Logo Container -->
-        <div class="logo-container">
-            <div class="logo">
-
-                <img src="./assets/logo.jpg" alt="Website Logo" class="logo-image">
-            </div>
-
-
-            <div class="logout_container">
-
-                <a class="logout_button" href="landing_page.html">
-                    <img src="./assets/logout.jpg" alt="logout button">
-
-                    <div class="logout">Sign out</div>
-
-                </a>
-
-            </div>
-
+    <!-- Logo Container -->
+    <div class="logo-container">
+        <div class="logo">
+            <img src="./assets/logo.jpg" alt="Website Logo" class="logo-image">
         </div>
 
-        <div class="to_do_list_container">
-
-            <div class="to_do_box">
-
-                <div class="quotes-container" id="quotes-container">
-                    <p class="quote" id="quote">
-                    </p>
-                </div>
-
-
-                <div class="todo_form">
-                    <form id="todo_form">
-                        <input type="text" class="todo_input" id="todo_input" placeholder="Enter your todo"
-                            autocomplete="off">
-                        <ul class="todos" id="todos"></ul>
-                    </form>
-                </div>
-
-
-            </div>
+        <div class="logout_container">
+            <a class="logout_button" href="landing_page.html">
+                <img src="./assets/logout.jpg" alt="logout button">
+                <div class="logout">Sign out</div>
+            </a>
         </div>
-
-        <small>Left click to toggle completed. <br> Right click to delete todo</small>
     </div>
 
-    <script src="./app.js"></script>
+    <div class="to_do_list_container">
+        <div class="to_do_box">
+            <div class="quotes-container" id="quotes-container">
+                <p class="quote" id="quote">
+                </p>
+            </div>
+            <div class="todo_form">
+                <form id="todo_form">
+                    <input type="text" class="todo_input" id="todo_input" placeholder="Enter your todo"
+                           autocomplete="off">
+                    <ul class="todos" id="todos"></ul>
+                </form>
+            </div>
+        </div>
+    </div>
+    <small>Left click to toggle completed. <br>Right click to delete todo</small>
+</div>
 
+<script src="app.js"></script>
+<script src="todo.js"></script>
 </body>
-
 </html>
