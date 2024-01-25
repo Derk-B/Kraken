@@ -31,26 +31,24 @@
           <h2 class="title">Sign In</h2>
           <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Username" />
+            <input type="text" id="username" placeholder="Username" />
           </div>
           <div class="input-field">
             <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Password" />
+            <input type="password" id="password" placeholder="Password" />
           </div>
-          <input type="submit" value="Login" class="btn solid" onclick="redirectToMain(event)" />
+          <input type="submit" value="Login" class="btn solid" onclick="signIn()" />
         </form>
 
         <div class="login_to_signup">
           <div class="content">
-            <p>No account? <a href="signup.html">Sign up</a></button>
+            <p>No account? <a href="signup.html">Sign up</a>
             </p>
           </div>
         </div>
-
       </div>
     </div>
   </div>
-
   <script src="./app.js"></script>
 </body>
 
