@@ -1,6 +1,5 @@
 FROM nginx:latest
 
-COPY ./static/ /app/static
-COPY ./out/ /app/out
+COPY ./static/ /app
 
 # CMD ["./app/out/web"]
