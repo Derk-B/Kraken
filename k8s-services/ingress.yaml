@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kraken-api-ingress
+  annotations:
+    cert-manager.io/issuer: my-ca-issuer
+    cert-manager.io/common-name: kraken.com
+  namespace: sandbox
+spec:
+  rules:
+    - host: kraken.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kraken-lb
+                port:
+                  number: 8090
+  tls:
+    - hosts:
+      - kraken.com
+      secretName: myingress-cert

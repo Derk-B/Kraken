@@ -104,3 +104,56 @@ kubectl get svc
 ```
 This should print the ip of the clusterIp (kraken-api-service)
 Navigate to this api in your browser: `[clusterip]:8080/ping`, this should return `{"message":"pong"}`
+
+## Load balander and ingress
+Run the following command
+
+`microk8s enable ingress; microk8s enable metallb`
+
+Metallb will ask you for a range of ip addresses, type: `10.50.100.5-10.50.100.25`
+```bash
+Enter each ip addresses range: 10.50.100.5-10.50.100.25
+```
+
+Now apply the yaml files for ingress and metallb
+`kubectl apply -f loadbalancer.yaml`
+`kubectl apply -f ingress.yaml`
+
+Test this using curl:
+```
+curl localhost/ping
+{"message":"pong"}
+```
+
+## Add certificate
+add cert-manager to your microk8s
+```
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.yaml
+```
+
+Then:
+```
+kubectl create ns sandbox
+kubectl apply -f issuer.yaml
+kubectl get issuer -n sandbox # This should print an issuer.
+```
+
+#### Add self signed certficate
+`kubectl apply -f root-ca.yaml`
+
+`kubectl get certificate -n sandbox` should print a certificate
+
+Create a certificate authority
+`kubectl apply -f ca-issuer.yaml`
+
+Update ingress to use the CA
+`kubectl apply -f ingress.yaml`
+
+Verify the certificate:
+`kctl get secret myingress-cert -n sandbox -o yaml`
+
+Verify the tls connectgion
+`openssl s_client -showcerts --connect kraken.com:443`
+
+This should show somewhere that it is unable to verify the certificate
+(that is because we signed it ourselves)
