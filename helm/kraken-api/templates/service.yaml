@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "kraken-api.fullname" . }}
+  labels:
+    {{- include "kraken-api.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 8888
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "kraken-api.selectorLabels" . | nindent 4 }}
