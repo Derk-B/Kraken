@@ -1,9 +1,9 @@
 const KRAKEN_API = "http://100.85.100.49:8888"
 
-function signIn() {
+async function signIn() {
     let email = document.getElementById("email").value
     let password = document.getElementById("password").value
-    let res = fetch(KRAKEN_API + "/user/signin", {
+    let res = await fetch(KRAKEN_API + "/user/signin", {
         headers: {
             "accept": "application/json",
             "accept-language": "en-US,en;q=0.9",
@@ -21,18 +21,18 @@ function signIn() {
                 throw new Error(`${err.message}`)
             })
         }
+        window.location.href = "/todo.html";
     }).catch(err => {
         console.log(err)
         alert(err)
     });
-    window.location.href = "/todo.html";
 }
 
-function signUp() {
+async function signUp() {
     let username = document.getElementById("username").value;
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
-    let res = fetch(KRAKEN_API + "/user/signup", {
+    let res = await fetch(KRAKEN_API + "/user/signup", {
         headers: {
             "accept": "application/json",
             "accept-language": "en-US,en;q=0.9",
@@ -51,10 +51,10 @@ function signUp() {
                 throw new Error(`${err.message}`)
             })
         }
+        alert("Account is successfully created. Redirecting to login...")
+        window.location.href = "/signin.html"
     }).catch(err => {
         console.log(err)
         alert(err)
     });
-    alert("Account is successfully created. Redirecting to login...")
-    window.location.href = "/signin.html";
 }
