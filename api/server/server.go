@@ -33,7 +33,7 @@ func New() Handler {
 
 	// Setup CORS policy
 	r.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"http://localhost", "http://100.85.100.49:8000", "http://100.85.100.49"},
+		AllowOrigins: []string{"http://localhost", "http://localhost:8000", "http://100.85.100.49:8000", "http://100.85.100.49"},
 		//AllowOrigins:        []string{"*"},
 		AllowPrivateNetwork: true,
 		AllowCredentials:    true,
@@ -52,7 +52,8 @@ func New() Handler {
 	r.Use(controllers.AuthRequired)
 	r.GET("/todos", controllers.GetAllTodos)
 	r.POST("/todo", controllers.AddTodo)
-	r.DELETE("/todo/:todoid", controllers.DeleteTodo)
+	r.GET("/update/:todoid", controllers.Update)
+	r.GET("/delete/:todoid", controllers.DeleteTodo)
 
 	return Handler{router: r}
 }

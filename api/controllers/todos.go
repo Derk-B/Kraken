@@ -20,11 +20,13 @@ type TodosResponse struct {
 	Data   TodosData
 }
 
+type TodoDetails struct {
+	Title string
+}
+
 func GetAllTodos(c *gin.Context) {
-	fmt.Println("hallo get all todos")
 	session := sessions.Default(c)
 	userId := session.Get("user")
-	fmt.Print(userId)
 
 	if userId == nil {
 		c.JSON(http.StatusUnauthorized, gin.H{
@@ -35,7 +37,7 @@ func GetAllTodos(c *gin.Context) {
 
 	var todos []models.Todo
 
-	err := models.DB.NewSelect().Model(&todos).Where("userid = ?", userId).Scan(context.Background())
+	err := models.DB.NewSelect().Model(&todos).Where("user_id = ?", userId).Scan(context.Background())
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -69,13 +71,19 @@ func AddTodo(c *gin.Context) {
 	}
 
 	// Get new todo from body
-	title := c.PostForm("title")
-	desc := c.PostForm("description")
+	todoDetails := new(TodoDetails)
+	if err := c.BindJSON(&todoDetails); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":  "error",
+			"message": err.Error(),
+		})
+		return
+	}
 
 	todo := models.Todo{
-		Title:       title,
-		Description: desc,
-		UserId:      userId.(int64),
+		Title:     todoDetails.Title,
+		Completed: false,
+		UserId:    userId.(int64),
 	}
 
 	// Store new todo in DB
@@ -97,6 +105,53 @@ func AddTodo(c *gin.Context) {
 	})
 }
 
+func Update(c *gin.Context) {
+	session := sessions.Default(c)
+	userId := session.Get("user")
+
+	// Parse id of todo from the request
+	reqTodoId, err := strconv.Atoi(c.Param("todoid"))
+
+	if err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"status":  "error",
+			"message": "Error while updating todo",
+		})
+		return
+	}
+
+	// Delete todo from database
+	todo := new(models.Todo)
+	err = models.DB.NewSelect().Model(todo).Where("id = ?", reqTodoId).Where("user_id = ?", userId).Scan(context.Background())
+
+	if err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"status":  "error",
+			"message": "Error while updating todo",
+		})
+		return
+	}
+
+	todo.Completed = !todo.Completed
+	_, err = models.DB.NewUpdate().Model(todo).Where("id = ?", reqTodoId).Where("user_id = ?", userId).Exec(context.Background())
+
+	if err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"status":  "error",
+			"message": "Error while updating todo",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status":  "success",
+		"message": "Todo updated successfully",
+	})
+}
+
 func DeleteTodo(c *gin.Context) {
 	session := sessions.Default(c)
 	userId := session.Get("user")
@@ -115,8 +170,7 @@ func DeleteTodo(c *gin.Context) {
 
 	// Delete todo from database
 	todo := new(models.Todo)
-	res, err := models.DB.NewDelete().Model(todo).Where("id = ?", reqTodoId).Where("userId = ?", userId).Exec(context.Background())
-
+	res, err := models.DB.NewDelete().Model(todo).Where("id = ?", reqTodoId).Where("user_id = ?", userId).Exec(context.Background())
 	rowsAffected, err2 := res.RowsAffected()
 
 	if err != nil || err2 != nil {

@@ -1,4 +1,4 @@
-const KRAKEN_API = "http://100.85.100.49:8888"
+const KRAKEN_API = "http://localhost:8888"
 
 async function signIn() {
     let email = document.getElementById("email").value

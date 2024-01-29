@@ -311,8 +311,6 @@ ul {
   border-radius: 15px;
   margin: 0.5rem 0;
   transition: background 0.2s linear;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
   width: 100%;
 }

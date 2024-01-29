@@ -100,7 +100,7 @@ func SignIn(c *gin.Context) {
 
 	if signInDetails.Password == registeredUser.Password {
 		session := sessions.Default(c)
-		session.Set("user", registeredUser.Username)
+		session.Set("user", registeredUser.Id)
 		session.Options(sessions.Options{
 			Path:     "/",
 			SameSite: http.SameSiteStrictMode,
