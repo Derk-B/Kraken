@@ -1,31 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <style>
-        .button {
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-        }
-
-        .button1 {
-            background-color: #04AA6D;
-        }
-
-        /* Green */
-        .button2 {
-            background-color: #008CBA;
-        }
-
-        /* Blue */
-    </style>
-</head>
+<head><title>Kraken Debug Page</title></head>
 <body>
 
 <form>
@@ -37,10 +12,12 @@
     <input type="password" id="password" name="pwd" value="123">
 </form>
 
-<button class="button button1" onclick="signIn()">Sign In</button>
-<button class="button button2" onclick="signUp()">Sign Up</button>
+<button onclick="signIn()">Sign In</button>
+<button onclick="signUp()">Sign Up</button>
+<button onclick="getAllTodos()">Get All Todos</button>
 
 <script src="app.js"></script>
+<script src="todo.js"></script>
 
 </body>
 </html>

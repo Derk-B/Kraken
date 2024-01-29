@@ -86,7 +86,6 @@ getQuote();
 setInterval(getQuote, 100000);
 
 function getAllTodos() {
-    console.log("Fetching todos")
     let res = fetch(KRAKEN_API + '/todos', {
         headers: {
             "accept": "application/json",
@@ -94,12 +93,15 @@ function getAllTodos() {
         },
         method: "GET",
         credentials: "include",
-    }).then(response => {
-        console.log(response.json())
-    })
-    .catch(error => {
-        console.log(error);
-        alert(error)
-        window.location.href = "/index.html";
+    }).then(res => {
+        if (!res.ok) {
+            return res.json().then(err => {
+                throw new Error(`${err.message}`)
+            })
+        }
+        // render to-do list
+    }).catch(err => {
+        console.log(err)
+        alert(err)
     });
 }

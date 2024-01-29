@@ -102,7 +102,11 @@ func SignIn(c *gin.Context) {
 		session := sessions.Default(c)
 		session.Set("user", registeredUser.Username)
 		session.Options(sessions.Options{
-			MaxAge: 3600,
+			Path:     "/",
+			SameSite: http.SameSiteStrictMode,
+			MaxAge:   3600 * 24 * 7,
+			HttpOnly: false,
+			Secure:   false,
 		})
 		if err := session.Save(); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{

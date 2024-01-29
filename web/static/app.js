@@ -58,3 +58,7 @@ async function signUp() {
         alert(err)
     });
 }
+
+async function resetPassword() {
+
+}

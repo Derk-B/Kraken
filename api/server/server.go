@@ -23,14 +23,17 @@ func New() Handler {
 	var secret = []byte("secret")
 	cs := cookie.NewStore(secret)
 	cs.Options(sessions.Options{
-		Path:     "",
+		Path:     "/",
 		SameSite: http.SameSiteStrictMode,
+		MaxAge:   3600 * 24 * 7,
+		HttpOnly: false,
+		Secure:   false,
 	})
 	r.Use(sessions.Sessions("kraken-session", cs))
 
 	// Setup CORS policy
 	r.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"http://localhost", "http://100.85.100.49:8000"},
+		AllowOrigins: []string{"http://localhost", "http://100.85.100.49:8000", "http://100.85.100.49"},
 		//AllowOrigins:        []string{"*"},
 		AllowPrivateNetwork: true,
 		AllowCredentials:    true,
