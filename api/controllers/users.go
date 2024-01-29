@@ -31,6 +31,16 @@ func SignUp(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	// Check credential validity
+	if signUpDetails.Email == "" || signUpDetails.Password == "" || signUpDetails.Username == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":  "error",
+			"message": "One or multiple credential entries are invalid.",
+		})
+		return
+	}
+
 	user := models.User{
 		Username: signUpDetails.Username,
 		Email:    signUpDetails.Email,
@@ -70,7 +80,6 @@ func SignUp(c *gin.Context) {
 }
 
 func SignIn(c *gin.Context) {
-	fmt.Println("Hall ologin")
 	var signInDetails SignInDetails
 	if err := c.BindJSON(&signInDetails); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -95,20 +104,12 @@ func SignIn(c *gin.Context) {
 		session.Options(sessions.Options{
 			MaxAge: 3600,
 		})
-		res := session.Get("user")
-		fmt.Println(res)
 		if err := session.Save(); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
 				"status":  "error",
 				"message": "Failed to save session.",
 			})
 			return
-		} else {
-			session := sessions.Default(c)
-			fmt.Println(session)
-			res := session.Get("user")
-			fmt.Println(res)
-			fmt.Print("This is the user")
 		}
 	} else {
 		c.JSON(http.StatusUnauthorized, gin.H{
@@ -134,6 +135,7 @@ func SignOut(c *gin.Context) {
 		})
 		return
 	}
+	session.Set("user", nil)
 	session.Delete("user")
 	if err := session.Save(); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -142,7 +144,10 @@ func SignOut(c *gin.Context) {
 		})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"message": "Successfully logged out"})
+	c.JSON(http.StatusOK, gin.H{
+		"status":  "ok",
+		"message": "Successfully signed out.",
+	})
 }
 
 func ResetPassword(c *gin.Context) {
@@ -157,8 +162,6 @@ func ResetPassword(c *gin.Context) {
 func AuthRequired(c *gin.Context) {
 	session := sessions.Default(c)
 	status := session.Get("user")
-	fmt.Println(session)
-	fmt.Println(status)
 	if status == nil {
 		// Abort the request with the appropriate error code
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{

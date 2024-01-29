@@ -1,4 +1,4 @@
-package endpoint
+package server
 
 import (
 	"kraken/api-server/controllers"
@@ -26,7 +26,7 @@ func New() Handler {
 
 	// Setup CORS policy
 	r.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"http://localhost"},
+		AllowOrigins: []string{"http://localhost", "http://100.85.100.49:8000"},
 		//AllowOrigins:        []string{"*"},
 		AllowPrivateNetwork: true,
 		AllowCredentials:    true,

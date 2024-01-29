@@ -87,12 +87,18 @@ setInterval(getQuote, 100000);
 
 function getAllTodos() {
     console.log("Fetching todos")
-    fetch(KRAKEN_API + '/todos')
-    .then(response => {
+    let res = fetch(KRAKEN_API + '/todos', {
+        headers: {
+            "accept": "application/json",
+            "accept-language": "en-US,en;q=0.9",
+        },
+        method: "GET",
+    }).then(response => {
         console.log(response.json())
     })
-
     .catch(error => {
         console.log(error);
+        alert(error)
+        window.location.href = "/index.html";
     });
 }

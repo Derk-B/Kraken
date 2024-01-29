@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"kraken/api-server/models"
-	endpoint "kraken/api-server/server"
+	"kraken/api-server/server"
 
 	"github.com/joho/godotenv"
 )
@@ -24,6 +24,6 @@ func main() {
 	PSQL_HOSTNAME := envFile["PSQL_HOSTNAME"]
 
 	models.Connect(PSQL_USERNAME, PSQL_PASSWORD, PSQL_PORT, PSQL_HOSTNAME, PSQL_DATABASE)
-	server := endpoint.New()
-	server.Run()
+	s := server.New()
+	s.Run()
 }

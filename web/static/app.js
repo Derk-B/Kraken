@@ -1,4 +1,4 @@
-const KRAKEN_API = "http://localhost:8888"
+const KRAKEN_API = "http://100.85.100.49:8888"
 
 function signIn() {
     let email = document.getElementById("email").value
@@ -21,11 +21,11 @@ function signIn() {
                 throw new Error(`${err.message}`)
             })
         }
-        window.location.href = "/todo.html";
     }).catch(err => {
         console.log(err)
         alert(err)
     });
+    window.location.href = "/todo.html";
 }
 
 function signUp() {
@@ -51,10 +51,10 @@ function signUp() {
                 throw new Error(`${err.message}`)
             })
         }
-        alert("Account successfully created. Redirecting to login...")
-        window.location.href = "/signin.html";
     }).catch(err => {
         console.log(err)
         alert(err)
     });
+    alert("Account is successfully created. Redirecting to login...")
+    window.location.href = "/signin.html";
 }
