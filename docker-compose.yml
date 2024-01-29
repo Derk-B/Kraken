@@ -9,6 +9,9 @@ services:
     container_name: api
     ports:
       - "${API_PORT}:8888"
+    depends_on:
+      db:
+        condition: service_started
 
   web:
     build:
@@ -16,8 +19,8 @@ services:
       dockerfile: Dockerfile
     container_name: web
     ports:
-      - "80:8000"
-      - "443:8000"
+      - "80:80"
+      - "443:443"
 
   db:
     env_file:
