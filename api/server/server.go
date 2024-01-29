@@ -1,12 +1,13 @@
 package endpoint
 
 import (
+	"kraken/api-server/controllers"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"github.com/uptrace/bun"
-	"kraken/api-server/controllers"
 )
 
 type Handler struct {
@@ -25,7 +26,7 @@ func New() Handler {
 
 	// Setup CORS policy
 	r.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"http://192.168.122.240:8000"},
+		AllowOrigins: []string{"http://localhost"},
 		//AllowOrigins:        []string{"*"},
 		AllowPrivateNetwork: true,
 		AllowCredentials:    true,
@@ -38,12 +39,13 @@ func New() Handler {
 	r.GET("/user/signout", controllers.SignOut)
 	r.POST("/user/password-reset", controllers.ResetPassword)
 
-	// Setup todos routes
-	r.Use(controllers.AuthRequired).GET("/todos", controllers.GetAllTodos)
-	r.Use(controllers.AuthRequired).POST("/todo", controllers.AddTodo)
-	r.Use(controllers.AuthRequired).DELETE("/todo/:todoid", controllers.DeleteTodo)
-
 	r.GET("/ping", controllers.Ping)
+
+	// Setup todos routes
+	r.Use(controllers.AuthRequired)
+	r.GET("/todos", controllers.GetAllTodos)
+	r.POST("/todo", controllers.AddTodo)
+	r.DELETE("/todo/:todoid", controllers.DeleteTodo)
 
 	return Handler{router: r}
 }

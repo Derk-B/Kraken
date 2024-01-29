@@ -18,8 +18,8 @@ services:
       dockerfile: Dockerfile
     container_name: web
     ports:
-      - "80:80"
-      - "443:443"
+      - "80:8000"
+      - "443:8000"
 
   db:
     env_file:
@@ -31,6 +31,6 @@ services:
       - POSTGRES_PASSWORD=${PSQL_PASSWORD}
       - POSTGRES_DB=${PSQL_DATABASE}
     ports:
-      - '${PSQL_PORT}:5432'
+      - '5500:5432'
     volumes:
       - ./db:/var/lib/postgresql/data
