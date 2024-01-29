@@ -3,11 +3,12 @@ package controllers
 import (
 	"context"
 	"fmt"
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-gonic/gin"
 	"kraken/api-server/models"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-gonic/gin"
 )
 
 type TodosData struct {
@@ -20,8 +21,10 @@ type TodosResponse struct {
 }
 
 func GetAllTodos(c *gin.Context) {
+	fmt.Println("hallo get all todos")
 	session := sessions.Default(c)
 	userId := session.Get("user")
+	fmt.Print(userId)
 
 	if userId == nil {
 		c.JSON(http.StatusUnauthorized, gin.H{

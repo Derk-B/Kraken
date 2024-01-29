@@ -12,7 +12,10 @@ if (todos) {
 form.addEventListener('submit', (e) => {
     e.preventDefault()
     addTodo()
+    getAllTodos()
 })
+
+form.addEventListener("load", () => getAllTodos());
 
 function addTodo(todo) {
     let todoText = input.value
@@ -81,3 +84,15 @@ function getQuote() {
 getQuote();
 
 setInterval(getQuote, 100000);
+
+function getAllTodos() {
+    console.log("Fetching todos")
+    fetch(KRAKEN_API + '/todos')
+    .then(response => {
+        console.log(response.json())
+    })
+
+    .catch(error => {
+        console.log(error);
+    });
+}

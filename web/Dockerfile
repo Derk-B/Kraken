@@ -1,5 +1,5 @@
-FROM nginx:latest
+FROM python:latest
 
 COPY ./static/ /app
 
-# CMD ["./app/out/web"]
+CMD ["python", "-m", "http.server", "--directory", "app"]

@@ -3,10 +3,11 @@ package controllers
 import (
 	"context"
 	"fmt"
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-gonic/gin"
 	"kraken/api-server/models"
 	"net/http"
+
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-gonic/gin"
 )
 
 type SignUpDetails struct {
@@ -69,6 +70,7 @@ func SignUp(c *gin.Context) {
 }
 
 func SignIn(c *gin.Context) {
+	fmt.Println("Hall ologin")
 	var signInDetails SignInDetails
 	if err := c.BindJSON(&signInDetails); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -90,12 +92,23 @@ func SignIn(c *gin.Context) {
 	if signInDetails.Password == registeredUser.Password {
 		session := sessions.Default(c)
 		session.Set("user", registeredUser.Username)
+		session.Options(sessions.Options{
+			MaxAge: 3600,
+		})
+		res := session.Get("user")
+		fmt.Println(res)
 		if err := session.Save(); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
 				"status":  "error",
 				"message": "Failed to save session.",
 			})
 			return
+		} else {
+			session := sessions.Default(c)
+			fmt.Println(session)
+			res := session.Get("user")
+			fmt.Println(res)
+			fmt.Print("This is the user")
 		}
 	} else {
 		c.JSON(http.StatusUnauthorized, gin.H{
@@ -144,6 +157,8 @@ func ResetPassword(c *gin.Context) {
 func AuthRequired(c *gin.Context) {
 	session := sessions.Default(c)
 	status := session.Get("user")
+	fmt.Println(session)
+	fmt.Println(status)
 	if status == nil {
 		// Abort the request with the appropriate error code
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
