@@ -1,5 +1,6 @@
-FROM python:latest
+FROM nginx:latest
 
-COPY ./static/ /app
+COPY static /usr/share/nginx/html
 
-CMD ["python", "-m", "http.server", "--directory", "app"]
+RUN rm /etc/nginx/conf.d/default.conf
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
