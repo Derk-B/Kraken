@@ -33,7 +33,14 @@ func New() Handler {
 
 	// Setup CORS policy
 	r.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"http://localhost", "http://localhost:8000", "http://100.85.100.49:8000", "http://100.85.100.49"},
+		// Add your testing environment here
+		AllowOrigins: []string{
+			"http://localhost",
+			"http://localhost:8000",
+			"http://100.85.100.49:8000",
+			"http://100.85.100.49",
+			"http://192.168.122.240",
+		},
 		//AllowOrigins:        []string{"*"},
 		AllowPrivateNetwork: true,
 		AllowCredentials:    true,
