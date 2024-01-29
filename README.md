@@ -157,3 +157,27 @@ Verify the tls connectgion
 
 This should show somewhere that it is unable to verify the certificate
 (that is because we signed it ourselves)
+
+
+## Helm Chart
+make sure you install helm
+```sudo snap install helm --classic```
+
+or check out the official website for command line https://helm.sh/?spm=a2c6h.12873639.article-detail.8.66a317e6nstnD3
+
+
+1. initialize an empty helm chart to deploy your app in a single action
+    ```helm create todolist```
+
+2. reuse all the kubenetes deployment files we created previously 
+    ```cp ../k8s-services/*.yaml todolist/templates/```
+
+3. decide which hardcoded values from these YAML files should become variable
+   create a values.yaml file that stored these properties
+
+4. package the helm chart
+    ```helm package todolist```
+
+
+
+
