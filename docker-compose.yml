@@ -2,7 +2,7 @@ version: "3"
 services:
   api:
     env_file:
-      - ./api/.env
+      - .env
     build:
       context: api
       dockerfile: Dockerfile
@@ -11,8 +11,6 @@ services:
       - "${API_PORT}:8888"
 
   web:
-    env_file:
-      - ./api/.env
     build:
       context: web
       dockerfile: Dockerfile
@@ -23,7 +21,7 @@ services:
 
   db:
     env_file:
-      - ./api/.env
+      - .env
     container_name: db
     image: postgres:14.1-alpine
     environment:
