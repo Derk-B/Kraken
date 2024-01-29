@@ -35,7 +35,24 @@ func SignUp(c *gin.Context) {
 		Email:    signUpDetails.Email,
 		Password: signUpDetails.Password,
 	}
-	_, err := models.DB.NewInsert().Model(&user).Exec(context.Background())
+
+	// Checking if already signed up with the email
+	registeredUser := new(models.User)
+	err := models.DB.NewSelect().Model(registeredUser).Where("email = ?", signUpDetails.Email).Scan(context.Background())
+	if err != nil {
+		registeredUser = nil
+	}
+	if registeredUser != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":  "error",
+			"message": "Account already exists.",
+		})
+		return
+	}
+
+	// Actual registration
+	_, err = models.DB.NewInsert().Model(&user).Exec(context.Background())
+
 	if err != nil {
 		fmt.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -46,7 +63,7 @@ func SignUp(c *gin.Context) {
 	}
 	// Send response
 	c.JSON(http.StatusOK, gin.H{
-		"status":  "success",
+		"status":  "ok",
 		"message": "Account successfully created.",
 	})
 }
@@ -54,13 +71,19 @@ func SignUp(c *gin.Context) {
 func SignIn(c *gin.Context) {
 	var signInDetails SignInDetails
 	if err := c.BindJSON(&signInDetails); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":  "error",
+			"message": err.Error(),
+		})
 		return
 	}
 	registeredUser := new(models.User)
 	err := models.DB.NewSelect().Model(registeredUser).Where("email = ?", signInDetails.Email).Scan(context.Background())
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":  "error",
+			"message": err.Error(),
+		})
 		return
 	}
 
@@ -68,11 +91,23 @@ func SignIn(c *gin.Context) {
 		session := sessions.Default(c)
 		session.Set("user", registeredUser.Username)
 		if err := session.Save(); err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"status":  "error",
+				"message": "Failed to save session.",
+			})
 			return
 		}
+	} else {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"status":  "error",
+			"message": "Password is incorrect.",
+		})
+		return
 	}
-	c.JSON(http.StatusOK, gin.H{"message": "Successfully authenticated user"})
+	c.JSON(http.StatusOK, gin.H{
+		"status":  "ok",
+		"message": "Successfully authenticated user",
+	})
 }
 
 func SignOut(c *gin.Context) {
@@ -80,12 +115,18 @@ func SignOut(c *gin.Context) {
 	status := session.Get("user")
 
 	if status == nil || status == false {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid session token"})
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":  "error",
+			"message": "Invalid session token",
+		})
 		return
 	}
 	session.Delete("user")
 	if err := session.Save(); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status":  "error",
+			"message": "Failed to save session",
+		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "Successfully logged out"})
@@ -105,7 +146,10 @@ func AuthRequired(c *gin.Context) {
 	status := session.Get("user")
 	if status == nil {
 		// Abort the request with the appropriate error code
-		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "unauthorized"})
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+			"status":  "error",
+			"message": "unauthorized",
+		})
 		return
 	}
 	// Continue down the chain to handler etc

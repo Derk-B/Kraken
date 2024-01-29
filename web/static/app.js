@@ -1,41 +1,60 @@
-const KRAKEN_API = "http://localhost:8080"
+const KRAKEN_API = "http://192.168.122.240:8888"
 
 function signIn() {
-    let username = document.getElementById("username").value
+    let email = document.getElementById("email").value
     let password = document.getElementById("password").value
-    let res = fetch(KRAKEN_API, {
-        "headers": {
+    let res = fetch(KRAKEN_API + "/user/signin", {
+        headers: {
             "accept": "application/json",
             "accept-language": "en-US,en;q=0.9",
         },
-        "body": {
-            "username": username,
+        body: JSON.stringify({
+            "email": email,
             "password": password
-        },
-        "method": "POST",
-        "mode": "cors",
-        "credentials": "include"
-    }).then(res => res.json())
-    // Process the response
+        }),
+        method: "POST",
+        // mode: "no-cors",
+        credentials: "include"
+    }).then(res => {
+        if (!res.ok) {
+            return res.json().then(err => {
+                throw new Error(`${err.message}`)
+            })
+        }
+        window.location.href = "/todo.html";
+    }).catch(err => {
+        console.log(err)
+        alert(err)
+    });
 }
 
 function signUp() {
     let username = document.getElementById("username").value;
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
-    let res = fetch(KRAKEN_API, {
-        "headers": {
+    let res = fetch(KRAKEN_API + "/user/signup", {
+        headers: {
             "accept": "application/json",
             "accept-language": "en-US,en;q=0.9",
         },
-        "body": {
+        body: JSON.stringify({
             "username": username,
             "email": email,
             "password": password
-        },
-        "method": "POST",
-        "mode": "cors",
-        "credentials": "include"
-    }).then(res => res.json())
-    // Process the response
+        }),
+        method: "POST",
+        // mode: "no-cors",
+        credentials: "include"
+    }).then(res => {
+        if (!res.ok) {
+            return res.json().then(err => {
+                throw new Error(`${err.message}`)
+            })
+        }
+        alert("Account successfully created. Redirecting to login...")
+        window.location.href = "/signin.html";
+    }).catch(err => {
+        console.log(err)
+        alert(err)
+    });
 }

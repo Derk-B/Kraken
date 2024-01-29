@@ -1,6 +1,7 @@
 package endpoint
 
 import (
+	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
@@ -18,7 +19,18 @@ func New() Handler {
 
 	// Setup the cookie store for session management
 	var secret = []byte("secret")
-	r.Use(sessions.Sessions("kraken-session", cookie.NewStore(secret)))
+	cs := cookie.NewStore(secret)
+	cs.Options(sessions.Options{Path: ""})
+	r.Use(sessions.Sessions("kraken-session", cs))
+
+	// Setup CORS policy
+	r.Use(cors.New(cors.Config{
+		AllowOrigins: []string{"http://192.168.122.240:8000"},
+		//AllowOrigins:        []string{"*"},
+		AllowPrivateNetwork: true,
+		AllowCredentials:    true,
+		AllowWildcard:       true,
+	}))
 
 	// Setup auth routes
 	r.POST("/user/signup", controllers.SignUp)
