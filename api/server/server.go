@@ -2,6 +2,7 @@ package server
 
 import (
 	"kraken/api-server/controllers"
+	"net/http"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/sessions"
@@ -21,7 +22,10 @@ func New() Handler {
 	// Setup the cookie store for session management
 	var secret = []byte("secret")
 	cs := cookie.NewStore(secret)
-	cs.Options(sessions.Options{Path: ""})
+	cs.Options(sessions.Options{
+		Path:     "",
+		SameSite: http.SameSiteStrictMode,
+	})
 	r.Use(sessions.Sessions("kraken-session", cs))
 
 	// Setup CORS policy

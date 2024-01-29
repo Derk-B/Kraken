@@ -93,6 +93,7 @@ function getAllTodos() {
             "accept-language": "en-US,en;q=0.9",
         },
         method: "GET",
+        credentials: "include",
     }).then(response => {
         console.log(response.json())
     })
