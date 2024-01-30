@@ -1,46 +1,33 @@
 package main
 
 import (
-	"context"
-	"database/sql"
-	"fmt"
-	api "kraken/api-server/endpoint"
-
-	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
-	"github.com/uptrace/bun"
-	"github.com/uptrace/bun/dialect/pgdialect"
-	"github.com/uptrace/bun/driver/pgdriver"
+	"kraken/api-server/models"
+	"kraken/api-server/server"
+	"os"
 )
 
 func main() {
 	// Get env variables for connection string
-	envFile, err := godotenv.Read("../.env")
-
-	if err != nil {
-		fmt.Println("Could not load env file")
-	}
+	//envFile, err := godotenv.Read("../.env")
+	//
+	//if err != nil {
+	//	fmt.Println("Could not load env file")
+	//}
 
 	// Create database connection
-	PSQL_PORT := envFile["PSQL_PORT"]
-	PSQL_USERNAME := envFile["PSQL_USERNAME"]
-	PSQL_PASSWORD := envFile["PSQL_PASSWORD"]
-	PSQL_DATABASE := envFile["PSQL_DATABASE"]
+	//PSQL_PORT := envFile["PSQL_PORT"]
+	//PSQL_USERNAME := envFile["PSQL_USERNAME"]
+	//PSQL_PASSWORD := envFile["PSQL_PASSWORD"]
+	//PSQL_DATABASE := envFile["PSQL_DATABASE"]
+	//PSQL_HOSTNAME := envFile["PSQL_HOSTNAME"]
 
-	dsn := "postgres://" + PSQL_USERNAME + ":" + PSQL_PASSWORD + "@localhost:" + PSQL_PORT + "/" + PSQL_DATABASE + "?sslmode=disable"
-	sqldb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(dsn)))
-	defer sqldb.Close()
-	defer context.Background().Done()
+	PSQL_PORT := os.Getenv("PSQL_PORT")
+	PSQL_USERNAME := os.Getenv("PSQL_USERNAME")
+	PSQL_PASSWORD := os.Getenv("PSQL_PASSWORD")
+	PSQL_DATABASE := os.Getenv("PSQL_DATABASE")
+	PSQL_HOSTNAME := os.Getenv("PSQL_HOSTNAME")
 
-	db := bun.NewDB(sqldb, pgdialect.New())
-
-	// Run router
-	r := gin.Default()
-
-	api.Run(r, db)
-
-	err = r.Run("0.0.0.0:8888")
-	if err != nil {
-		return
-	}
+	models.Connect(PSQL_USERNAME, PSQL_PASSWORD, PSQL_PORT, PSQL_HOSTNAME, PSQL_DATABASE)
+	s := server.New()
+	s.Run()
 }

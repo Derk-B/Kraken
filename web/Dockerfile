@@ -1,5 +1,6 @@
 FROM nginx:latest
 
-COPY ./static/ /app
+COPY static /usr/share/nginx/html
 
-# CMD ["./app/out/web"]
+RUN rm /etc/nginx/conf.d/default.conf
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf

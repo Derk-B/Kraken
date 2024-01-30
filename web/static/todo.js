@@ -2,66 +2,122 @@
 const form = document.getElementById('todo_form')
 const input = document.getElementById('todo_input')
 const todosUL = document.getElementById('todos')
-const todos = JSON.parse(localStorage.getItem('todos'))
+let todos = []
 
-
-if (todos) {
-    todos.forEach(todo => addTodo(todo))
-}
+getAllTodos()
 
 form.addEventListener('submit', (e) => {
     e.preventDefault()
     addTodo()
 })
 
-function addTodo(todo) {
-    let todoText = input.value
+function addTodo() {
+    fetch(KRAKEN_API + '/todo', {
+        headers: {
+            "accept": "application/json",
+            "accept-language": "en-US,en;q=0.9",
+        },
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify({
+            "Title": input.value,
+        })
+    }).then(async res => {
+        if (!res.ok) {
+            const err = await res.json()
+            throw new Error(`${err.message}`)
+        }
+        
+        return res.json()
+    }).then(_ => {
+        input.value = ""
+        getAllTodos()
+        renderTodos()
+    }
+    ).catch(err => {
+        console.log(err)
+        alert(err)
+    });
+}
 
-    if (todo) {
-        todoText = todo.text
+function renderTodos() {
+    while(todosUL.hasChildNodes()) {
+        todosUL.removeChild(todosUL.childNodes[0])
     }
 
-    if (todoText) {
-        const todoEl = document.createElement('li')
-        if (todo && todo.completed) {
-            todoEl.classList.add('completed')
+    if (todos == null) return
+
+    todos.forEach(todo => {
+        const todoLi = document.createElement("li")
+
+        todoLi.innerText = todo.Title
+        todoLi.classList.add('completed')
+
+        if (!todo.Completed) {
+            todoLi.classList.toggle("completed")
         }
 
-        todoEl.innerText = todoText
+        todoLi.addEventListener("click", () => changeCompletion(todo, todoLi))
 
-        todoEl.addEventListener('click', () => {
-            todoEl.classList.toggle('completed')
-            updateLS()
-        })
+        todoLi.addEventListener("contextmenu", (e) => deleteTodo(e, todo))
 
-        todoEl.addEventListener('contextmenu', (e) => {
-            e.preventDefault()
-
-            todoEl.remove()
-            updateLS()
-        })
-
-        todosUL.appendChild(todoEl)
-        input.value = ''
-        updateLS()
-    }
-}
-
-function updateLS() {
-    todosEl = document.querySelectorAll('li')
-
-    const todos = []
-
-    todosEl.forEach(todoEl => {
-        todos.push({
-            text: todoEl.innerText,
-            completed: todoEl.classList.contains('completed')
-        })
+        todosUL.appendChild(todoLi)
     })
-
-    localStorage.setItem('todos', JSON.stringify(todos))
 }
 
+function deleteTodo(e, todo) {
+    e.preventDefault()
+
+    fetch(KRAKEN_API + '/delete/' + todo.Id, {
+        headers: {
+            "accept": "application/json",
+            "accept-language": "en-US,en;q=0.9",
+        },
+        method: "GET",
+        credentials: "include",
+    }).then(async res => {
+        if (!res.ok) {
+            const err = await res.json()
+            throw new Error(`${err.message}`)
+        }
+        
+        return res.json()
+    }).then(_ => {
+        getAllTodos()
+        renderTodos()
+    }
+    ).catch(err => {
+        console.log(err)
+        alert(err)
+    });
+}
+
+function changeCompletion(todo, htmlElem) {
+    htmlElem.classList.toggle("completed")
+    
+    fetch(KRAKEN_API + '/update/' + todo.Id, {
+        headers: {
+            "accept": "application/json",
+            "accept-language": "en-US,en;q=0.9",
+        },
+        method: "GET",
+        credentials: "include",
+    }).then(async res => {
+        if (!res.ok) {
+            const err = await res.json()
+            throw new Error(`${err.message}`)
+        }
+        
+        return res.json()
+    }).then(_ => {
+        getAllTodos()
+        renderTodos()
+    }
+    ).catch(err => {
+        console.log(err)
+        alert(err)
+    });
+}
 
 // quote
 const quotesContainer = document.getElementById('quotes-container');
@@ -81,3 +137,28 @@ function getQuote() {
 getQuote();
 
 setInterval(getQuote, 100000);
+
+function getAllTodos() {
+    fetch(KRAKEN_API + '/todos', {
+        headers: {
+            "accept": "application/json",
+            "accept-language": "en-US,en;q=0.9",
+        },
+        method: "GET",
+        credentials: "include",
+    }).then(async res => {
+        if (!res.ok) {
+            const err = await res.json()
+            throw new Error(`${err.message}`)
+        }
+        
+        return res.json()
+    }).then(data => {
+        todos = data.Data.Todos
+        renderTodos()
+    }
+    ).catch(err => {
+        console.log(err)
+        alert(err)
+    });
+}
