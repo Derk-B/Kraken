@@ -37,9 +37,11 @@ func New() Handler {
 		AllowOrigins: []string{
 			"http://localhost",
 			"http://localhost:8000",
-			"http://100.85.100.49:8000",
 			"http://100.85.100.49",
+			"http://100.85.100.49:8000",
 			"http://192.168.122.240",
+			"http://192.168.122.240:8000",
+			"http://192.168.64.3",
 		},
 		//AllowOrigins:        []string{"*"},
 		AllowPrivateNetwork: true,
