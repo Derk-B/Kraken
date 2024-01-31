@@ -14,9 +14,9 @@ The docker-compose file creates 3 containers: api, web and db.
 3. Build & run the managed containers
     ```bash
     # build containers
-    docker compose build
+    GIT_COMMIT=$(git rev-parse HEAD) docker compose build
     # start managed containers
-    docker compose up -d
+    GIT_COMMIT=$(git rev-parse HEAD) docker compose up -d
     ```
 
 4. Access the app
