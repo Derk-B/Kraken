@@ -2,56 +2,22 @@
 
 1. Dependencies
    Make sure you have installed:
-   - Docker (Compose)
+   - Docker (w/ Compose)
    - Go
-   - Microk8s
+   - Microk8s (or any other K8s implementations, w/ registry add-on enabled)
 
 2. Build the images for each container:
    ```bash
-   docker-compose build
+   GIT_COMMIT=$(git rev-parse HEAD) docker-compose build
    ```
    The containers must be named: `kraken_web` and `kraken_api`
-   If you still need to change the tag of the images, run:
-   ```bash
-   docker tag oldWebImageName kraken_web;
-   docker tag oldApiImageName kraken_api
-   ```
 
-3. Make sure that the registry add-on is running for microk8s.
-   ```bash
-   > sudo microk8s status
-   ...
-   addons:
-       enabled:
-           registry ...
-       disabled:
-           registry # If registry is mentioned here instead, run: sudo microk8s enable registry
-       ...
-   ```
-
-   You might need to add the file: `/etc/docker/daemon.json` and put the following inside the file:
-   ```json
-   {
-       "insecure-registries": ["localhost:32000"]
-   }
-   ```
-   Test the registry using:
-   ```bash
-   > curl http://localhost:32000/v2/
-   
-   [] # Works correctly
-   
-   # or
-   
-   curl: (7) Failed to connect to localhost port 32000 after 0 ms: Connection refused # Does not work, check if registry is enabled!
-   ```
-
-   Push the image to the registry:
+3. Push the image to the local K8s registry:
    ```bash
    docker tag kraken_api localhost:32000/kraken_api
    docker push localhost:32000/kraken_api
    ```
-
+   
    The deployment file for the api is already created: `k8s-services/kraken-api-deployment.yaml`
 
    Go to the root of the project and create the pods for the api:
