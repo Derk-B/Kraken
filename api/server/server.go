@@ -67,9 +67,7 @@ func New() Handler {
 	return Handler{router: r}
 }
 
-func (h *Handler) Run() {
+func (h *Handler) Run() error {
 	err := h.router.Run("0.0.0.0:8888")
-	if err != nil {
-		return
-	}
+	return err
 }

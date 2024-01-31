@@ -31,3 +31,5 @@ out/
 # Ignore the built binary
 api-server
 db/
+
+.pre-commit-config.yaml

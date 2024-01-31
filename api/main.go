@@ -29,5 +29,8 @@ func main() {
 
 	models.Connect(PSQL_USERNAME, PSQL_PASSWORD, PSQL_PORT, PSQL_HOSTNAME, PSQL_DATABASE)
 	s := server.New()
-	s.Run()
+	err := s.Run()
+	if err != nil {
+		panic(err)
+	}
 }
