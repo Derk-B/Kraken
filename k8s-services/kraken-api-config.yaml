@@ -5,7 +5,7 @@ metadata:
   labels: 
     app: kraken-api
 data:
-  PSQL_PORT: "30001"
+  PSQL_PORT: "5432"
   PSQL_USERNAME: postgresadmin
   PSQL_DATABASE: postgresdb
-  PSQL_HOSTNAME: postgres
+  PSQL_HOSTNAME: postgres-service
