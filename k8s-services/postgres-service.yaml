@@ -1,3 +1,7 @@
+# Only use this in development.
+# Leaving this out of k8s will disable access to the database from the outside,
+# but will still enable the api to connect to the database
+
 apiVersion: v1
 kind: Service
 metadata:
