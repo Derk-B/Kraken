@@ -5,7 +5,7 @@ metadata:
   labels:
     app: kraken-api
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: kraken-api
@@ -19,3 +19,12 @@ spec:
         image: localhost:32000/kraken_api:latest
         ports:
         - containerPort: 8888
+        envFrom:
+          - configMapRef:
+              name: kraken-api-config
+        env:
+          - name: PSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: kraken-api-secret
+                key: PSQL_PASSWORD

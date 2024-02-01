@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kraken-api-config
+  labels: 
+    app: kraken-api
+data:
+  PSQL_PORT: "30001"
+  PSQL_USERNAME: postgresadmin
+  PSQL_DATABASE: postgresdb
+  PSQL_HOSTNAME: postgres
