@@ -22,10 +22,10 @@ spec:
         - containerPort: 8888
         envFrom:
           - configMapRef:
-              name: kraken-api-config
+              name: kraken-config
         env:
-          - name: PSQL_PASSWORD
+          - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: kraken-api-secret
-                key: PSQL_PASSWORD
+                name: kraken-config-secret
+                key: POSTGRES_PASSWORD

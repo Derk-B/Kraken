@@ -16,14 +16,14 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: kraken-api-lb
+                name: kraken-api-service
                 port:
                   number: 443
           - path: /(.*)
             pathType: Prefix
             backend:
               service:
-                name: kraken-web-lb
+                name: kraken-web-service
                 port:
                   number: 443
   tls:

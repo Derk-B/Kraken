@@ -4,7 +4,7 @@ metadata:
   name: kraken-web-service
   namespace: sandbox
 spec:
-  type: NodePort  
+  type: LoadBalancer  
   ports:
     - protocol: TCP
       port: 80
