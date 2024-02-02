@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: maintainer-role
+  namespace: sandbox
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list", "eviction"]
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get"]
