@@ -25,4 +25,8 @@ The docker-compose file creates 3 containers: api, web and db.
    ```bash
    curl localhost:8888/ping 
    ```
-   If everything works out, you should see `{"message":"Kraken API is running on host: HOSTNAME","status":"ok"}` (assuming your hostname is `HOSTNAME`).
+   If everything works out, you should see 
+   ```json
+   {"message":"Kraken API is running on host: HOSTNAME","status":"ok","verison":"SOME_COMMIT_HASH"}
+   ``` 
+   (assuming your hostname is `HOSTNAME`, and build hash being `SOME_COMMIT_HASH`).
