@@ -1,4 +1,4 @@
-FROM nginx:latest
+FROM nginx:alpine-slim
 
 COPY static /usr/share/nginx/html
 

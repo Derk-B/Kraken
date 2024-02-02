@@ -30,9 +30,9 @@ services:
     container_name: db
     image: postgres:14.1-alpine
     environment:
-      - POSTGRES_USER=${PSQL_USERNAME}
-      - POSTGRES_PASSWORD=${PSQL_PASSWORD}
-      - POSTGRES_DB=${PSQL_DATABASE}
+      - POSTGRES_USER=${POSTGRES_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DATABASE}
     ports:
       - '5500:5432'
     volumes:
