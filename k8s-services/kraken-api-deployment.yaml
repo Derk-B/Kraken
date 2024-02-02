@@ -4,6 +4,7 @@ metadata:
   name: kraken-api-deployment
   labels:
     app: kraken-api
+  namespace: sandbox
 spec:
   replicas: 3
   selector:

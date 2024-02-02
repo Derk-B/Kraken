@@ -4,6 +4,7 @@ metadata:
   name: kraken-api-config
   labels: 
     app: kraken-api
+  namespace: sandbox
 data:
   PSQL_PORT: "5432"
   PSQL_USERNAME: postgresadmin
