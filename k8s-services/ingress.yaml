@@ -1,11 +1,12 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: kraken-api-ingress
+  name: kraken-ingress
   annotations:
     cert-manager.io/issuer: my-ca-issuer
     cert-manager.io/common-name: kraken.com
-  namespace: sandbox
+    nginx.ingress.kubernetes.io/secure-backends: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true" 
 spec:
   rules:
     - host: kraken.com
@@ -15,9 +16,16 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: kraken-lb
+                name: kraken-web-lb
                 port:
-                  number: 8090
+                  number: 80
+          # - path: /api
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: kraken-api-lb
+          #       port:
+          #         number: 443
   tls:
     - hosts:
       - kraken.com
