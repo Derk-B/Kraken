@@ -57,6 +57,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           file: api/Dockerfile
           push: true
+          build-args: |
+            GIT_COMMIT=${{ github.head_ref }}.${{ github.sha }}
           tags: ${{ steps.meta-api.outputs.tags }}
           labels: ${{ steps.meta-api.outputs.labels }}
 
