@@ -16,7 +16,7 @@ spec:
         app: kraken-web
     spec:
       containers:
-      - name: kraken-web-container
-        image: localhost:32000/kraken_web:latest
-        ports:
-        - containerPort: 80
+        - name: kraken-web-container
+          image: localhost:32000/kraken_web:latest
+          ports:
+            - containerPort: 80

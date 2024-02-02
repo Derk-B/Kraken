@@ -16,16 +16,16 @@ spec:
         app: kraken-api
     spec:
       containers:
-      - name: kraken-api-container
-        image: localhost:32000/kraken_api:latest
-        ports:
-        - containerPort: 8888
-        envFrom:
-          - configMapRef:
-              name: kraken-config
-        env:
-          - name: POSTGRES_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: kraken-config-secret
-                key: POSTGRES_PASSWORD
+        - name: kraken-api-container
+          image: localhost:32000/kraken_api:latest
+          ports:
+            - containerPort: 8888
+          envFrom:
+            - configMapRef:
+                name: kraken-config
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: kraken-config-secret
+                  key: POSTGRES_PASSWORD

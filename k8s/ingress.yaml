@@ -28,5 +28,5 @@ spec:
                   number: 443
   tls:
     - hosts:
-      - kraken.com
+        - kraken.com
       secretName: myingress-cert
