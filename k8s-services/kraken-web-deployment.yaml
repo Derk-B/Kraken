@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kraken-web-deployment
+  labels:
+    app: kraken-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kraken-web
+  template:
+    metadata:
+      labels:
+        app: kraken-web
+    spec:
+      containers:
+      - name: kraken-web-container
+        image: localhost:32000/kraken_web:latest
+        ports:
+        - containerPort: 8888
