@@ -55,6 +55,8 @@ func New() Handler {
 	r.GET("/user/signout", controllers.SignOut)
 	r.POST("/user/password-reset", controllers.ResetPassword)
 
+	// Healthcheck
+	r.GET("/")
 	r.GET("/ping", controllers.Ping)
 
 	// Setup todos routes
