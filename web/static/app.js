@@ -1,4 +1,4 @@
-const KRAKEN_API = "https://kraken.com/api"
+const KRAKEN_API = "https://api.kraken.com"
 
 async function signIn() {
     let email = document.getElementById("email").value
