@@ -1,26 +1,17 @@
 # Building & Running (the Helm Chart way)
 
 1. Dependencies
-   Make sure you have installed:
-   - Docker (w/ Compose)
-   - Go
-   - Microk8s (or any other K8s implementations, w/ registry add-on enabled)
-   - Helm
+    Make sure you have installed:
+    - Docker (w/ Compose, optional if other runtime is used)
+    - Microk8s (or any other K8s implementations, w/ registry add-on enabled)
+    - Helm
 
-2. Initialize an empty helm chart to deploy your app in a single action
-   ```bash
-   helm create todolist
-   ```
-
-3. Reuse all the Kubernetes deployment files we created previously 
-   ```bash
-   cp ../k8s-services/*.yaml todolist/templates/
-   ```
-
-4. Decide which hardcoded values from these YAML files should become variable
-   create a values.yaml file that stored these properties
-
-5. Package the helm chart
-   ```bash
-   helm package todolist
-   ```
+2. Install the Helm package
+    ```bash
+    helm install <name-of-your-install> helm -n <name-of-your-k8s-namespace>
+    ```
+    For example:
+    ```bash
+    helm install kraken-instance helm -n dev
+    ```
+    will start an install called `kraken-instance` in namespace `dev`.

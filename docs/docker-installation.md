@@ -2,8 +2,8 @@
 The docker-compose file creates 3 containers: api, web and db.
 
 1. Dependencies
-   Make sure you have installed:
-   * Docker (w/ Compose)
+    Make sure you have installed:
+    * Docker (w/ Compose)
 
 2. Copy required environment file
     ```bash
@@ -20,13 +20,13 @@ The docker-compose file creates 3 containers: api, web and db.
     ```
 
 4. Access the app
-   To access the web interface of Kraken, navigate to [http://localhost](http://localhost) in your browser.  
-   To access the REST API of Kraken, you can access it at [http://localhost:8888](http://localhost:8888). For example, the following command checks the status of the API server:
-   ```bash
-   curl localhost:8888/ping 
-   ```
-   If everything works out, you should see 
-   ```json
-   {"message":"Kraken API is running on host: HOSTNAME","status":"ok","verison":"SOME_COMMIT_HASH"}
-   ``` 
-   (assuming your hostname is `HOSTNAME`, and build hash being `SOME_COMMIT_HASH`).
+    To access the web interface of Kraken, navigate to [http://localhost](http://localhost) in your browser.  
+    To access the REST API of Kraken, you can access it at [http://localhost:8888](http://localhost:8888). For example, the following command checks the status of the API server:
+    ```bash
+    curl localhost:8888/ping 
+    ```
+    If everything works out, you should see 
+    ```json
+    {"message":"Kraken API is running on host: HOSTNAME","status":"ok","verison":"SOME_COMMIT_HASH"}
+    ``` 
+    (assuming your hostname is `HOSTNAME`, and build hash being `SOME_COMMIT_HASH`).
