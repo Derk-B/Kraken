@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "kraken.fullname" . }}-kraken-web-deployment
+  labels:
+    app: kraken-web
+  {{- include "kraken.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.krakenWebDeployment.replicas }}
+  selector:
+    matchLabels:
+      app: kraken-web
+    {{- include "kraken.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: kraken-web
+      {{- include "kraken.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - env:
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ quote .Values.kubernetesClusterDomain }}
+        image: {{ .Values.krakenWebDeployment.krakenWebContainer.image.repository }}:{{
+          .Values.krakenWebDeployment.krakenWebContainer.image.tag | default .Chart.AppVersion
+          }}
+        name: kraken-web-container
+        ports:
+        - containerPort: 80
+        resources: {}

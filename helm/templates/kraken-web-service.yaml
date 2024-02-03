@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "kraken.fullname" . }}-kraken-web-service
+  labels:
+  {{- include "kraken.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.krakenWebService.type }}
+  selector:
+    app: kraken-web
+  {{- include "kraken.selectorLabels" . | nindent 4 }}
+  ports:
+	{{- .Values.krakenWebService.ports | toYaml | nindent 2 -}}

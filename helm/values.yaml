@@ -1,0 +1,48 @@
+krakenApiDeployment:
+  krakenApiContainer:
+    image:
+      repository: localhost:32000/kraken_api
+      tag: latest
+  replicas: 3
+krakenApiService:
+  ports:
+  - port: 443
+    protocol: TCP
+    targetPort: 8888
+  type: LoadBalancer
+krakenConfig:
+  postgresDb: postgresdb
+  postgresHostname: postgres-service
+  postgresPort: "5432"
+  postgresUsername: postgresadmin
+krakenConfigSecret:
+  postgresPassword: ""
+krakenWebDeployment:
+  krakenWebContainer:
+    image:
+      repository: localhost:32000/kraken_web
+      tag: latest
+  replicas: 1
+krakenWebService:
+  ports:
+  - port: 443
+    protocol: TCP
+    targetPort: 80
+  type: LoadBalancer
+kubernetesClusterDomain: cluster.local
+postgresDeployment:
+  postgresContainer:
+    image:
+      repository: postgres
+      tag: 13.1-alpine
+    imagePullPolicy: IfNotPresent
+  replicas: 1
+postgresService:
+  ports:
+  - port: 5432
+    targetPort: 5432
+  type: ClusterIP
+pvc:
+  postgresPvClaim:
+    storageClass: microk8s-hostpath
+    storageRequest: 5Gi

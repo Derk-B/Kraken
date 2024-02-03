@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "kraken.fullname" . }}-kraken-api-deployment
+  labels:
+    app: kraken-api
+  {{- include "kraken.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.krakenApiDeployment.replicas }}
+  selector:
+    matchLabels:
+      app: kraken-api
+    {{- include "kraken.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: kraken-api
+      {{- include "kraken.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - env:
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: POSTGRES_PASSWORD
+              name: {{ include "kraken.fullname" . }}-kraken-config-secret
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ quote .Values.kubernetesClusterDomain }}
+        envFrom:
+        - configMapRef:
+            name: {{ include "kraken.fullname" . }}-kraken-config
+        image: {{ .Values.krakenApiDeployment.krakenApiContainer.image.repository }}:{{
+          .Values.krakenApiDeployment.krakenApiContainer.image.tag | default .Chart.AppVersion
+          }}
+        name: kraken-api-container
+        ports:
+        - containerPort: 8888
+        resources: {}

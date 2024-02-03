@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "kraken.fullname" . }}-only-api-can-access-db
+  labels:
+  {{- include "kraken.labels" . | nindent 4 }}
+spec:
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: kraken-api
+  podSelector:
+    matchLabels:
+      app: postgres
+  policyTypes:
+  - Ingress
