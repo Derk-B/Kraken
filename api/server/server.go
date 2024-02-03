@@ -35,6 +35,7 @@ func New() Handler {
 	r.Use(cors.New(cors.Config{
 		// Add your testing environment here
 		AllowOrigins: []string{
+			// Dev
 			"http://localhost",
 			"http://localhost:8000",
 			"http://100.85.100.49",
@@ -42,6 +43,12 @@ func New() Handler {
 			"http://192.168.122.240",
 			"http://192.168.122.240:8000",
 			"http://192.168.64.3",
+
+			// Prod
+			"http://kraken.com",
+			"https://kraken.com",
+			"http://api.kraken.com",
+			"https://api.kraken.com",
 		},
 		//AllowOrigins:        []string{"*"},
 		AllowPrivateNetwork: true,
