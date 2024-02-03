@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   name: {{ include "kraken.fullname" . }}-kraken-ingress
   labels:
+    app: ingress
   {{- include "kraken.labels" . | nindent 4 }}
   annotations:
     cert-manager.io/common-name: kraken.com
