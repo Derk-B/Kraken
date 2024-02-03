@@ -46,5 +46,5 @@ postgresService:
   type: ClusterIP
 pvc:
   postgresPvClaim:
-    storageClass: microk8s-hostpath
+    storageClass: standard-rwo
     storageRequest: 5Gi
