@@ -15,7 +15,7 @@ krakenConfig:
   postgresDb: postgresdb
   postgresHostname: postgres-service
   postgresPort: "5432"
-  postgresUsername: postgresadmin
+  postgresUser: postgres
 krakenConfigSecret:
   postgresPassword: "admin123"
 krakenWebDeployment:
