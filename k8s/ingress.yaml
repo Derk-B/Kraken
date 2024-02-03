@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   name: kraken-ingress
   annotations:
+    # cert-manager.io/cluster-issuer: selfsigned-cluster-issuer
     cert-manager.io/issuer: my-ca-issuer
     cert-manager.io/common-name: kraken.com
     nginx.ingress.kubernetes.io/rewrite-target: /$1
@@ -12,21 +13,25 @@ spec:
     - host: kraken.com
       http:
         paths:
-          - path: /api/(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: kraken-api-service
-                port:
-                  number: 443
-          - path: /(.*)
+          - path: /
             pathType: Prefix
             backend:
               service:
                 name: kraken-web-service
                 port:
-                  number: 443
+                  number: 80
+    - host: api.kraken.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kraken-api-service
+                port:
+                  number: 80
   tls:
     - hosts:
         - kraken.com
-      secretName: myingress-cert
+        - api.kraken.com
+      secretName: root-secret

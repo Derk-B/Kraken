@@ -11,7 +11,7 @@ import (
 
 var DB *bun.DB
 
-func Connect(PSQL_USERNAME, PSQL_PASSWORD, PSQL_PORT, PSQL_HOSTNAME, PSQL_DATABASE string) {
+func Connect(PSQL_USERNAME, PSQL_PASSWORD, PSQL_PORT, PSQL_HOSTNAME, PSQL_DATABASE string) error {
 	dsn := "postgres://" + PSQL_USERNAME + ":" + PSQL_PASSWORD + "@" + PSQL_HOSTNAME + ":" + PSQL_PORT + "/" + PSQL_DATABASE + "?sslmode=disable"
 	sqldb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(dsn)))
 
@@ -20,10 +20,12 @@ func Connect(PSQL_USERNAME, PSQL_PASSWORD, PSQL_PORT, PSQL_HOSTNAME, PSQL_DATABA
 	// Create table if not exist
 	_, err := DB.NewCreateTable().Model((*User)(nil)).IfNotExists().Exec(context.Background())
 	if err != nil {
-		panic(err)
+		return err
 	}
 	_, err = DB.NewCreateTable().Model((*Todo)(nil)).IfNotExists().Exec(context.Background())
 	if err != nil {
-		panic(err)
+		return err
 	}
+
+	return nil
 }

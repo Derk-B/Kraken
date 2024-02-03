@@ -16,19 +16,23 @@ spec:
       paths:
       - backend:
           service:
-            name: '{{ include "kraken.fullname" . }}-kraken-api-service'
-            port:
-              number: 443
-        path: /api/(.*)
-        pathType: Prefix
-      - backend:
-          service:
             name: '{{ include "kraken.fullname" . }}-kraken-web-service'
             port:
-              number: 443
-        path: /(.*)
+              number: 80
+        path: /
+        pathType: Prefix
+  - host: api.kraken.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: '{{ include "kraken.fullname" . }}-kraken-api-service'
+            port:
+              number: 80
+        path: /
         pathType: Prefix
   tls:
   - hosts:
     - kraken.com
-    secretName: myingress-cert
+    - api.kraken.com
+    secretName: root-secret
