@@ -5,12 +5,10 @@ on:
   push:
     paths:
       - 'api/**'
-      - 'web/**'
 
 env:
   REGISTRY: ghcr.io
-  API_IMAGE_NAME: ${{ github.repository }}-api
-  WEB_IMAGE_NAME: ${{ github.repository }}-web
+  IMAGE_NAME: ${{ github.repository }}-api
 
 jobs:
   build-and-push-image:
@@ -37,11 +35,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for API image
-        id: meta-api
+      - name: Extract metadata (tags, labels) for the image
+        id: meta
         uses: docker/metadata-action@v5.5.1
         with:
-          images: ${{ env.REGISTRY }}/${{ env.API_IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: latest
           # tags: |
           #   type=ref,event=branch
@@ -49,7 +47,7 @@ jobs:
           #   type=semver,pattern={{version}}
           #   type=semver,pattern={{major}}.{{minor}}
 
-      - name: Build and push API image
+      - name: Build and push
         uses: docker/build-push-action@v5.1.0
         with:
           context: api
@@ -58,22 +56,5 @@ jobs:
           push: true
           build-args: |
             GIT_COMMIT=${{ github.head_ref }}.${{ github.sha }}
-          tags: ${{ steps.meta-api.outputs.tags }}
-          labels: ${{ steps.meta-api.outputs.labels }}
-
-      - name: Extract metadata (tags, labels) for web image
-        id: meta-web
-        uses: docker/metadata-action@v5.5.1
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.WEB_IMAGE_NAME }}
-          tags: latest
-
-      - name: Build and push web image
-        uses: docker/build-push-action@v5.1.0
-        with:
-          context: web
-          platforms: linux/amd64,linux/arm64
-          file: web/Dockerfile
-          push: true
-          tags: ${{ steps.meta-web.outputs.tags }}
-          labels: ${{ steps.meta-web.outputs.labels }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
