@@ -1,41 +1,41 @@
 # Building & Running (the K8s way)
 
 1. Dependencies
-   Make sure you have installed:
-   - Docker (w/ Compose)
-   - Go
-   - Microk8s (or any other K8s implementations, w/ registry add-on enabled)
+    Make sure you have installed:
+    - Docker (w/ Compose)
+    - Go
+    - Microk8s (or any other K8s implementations, w/ registry add-on enabled)
 
 2. Build the images for each container:
-   ```bash
-   GIT_COMMIT=$(git rev-parse HEAD) docker-compose build
-   ```
-   The containers must be named: `kraken_web` and `kraken_api`
+    ```bash
+    GIT_COMMIT=$(git rev-parse HEAD) docker-compose build
+    ```
+    The containers must be named: `kraken_web` and `kraken_api`
 
 3. Push the image to the local K8s registry:
-   ```bash
-   docker tag kraken_api localhost:32000/kraken_api
-   docker push localhost:32000/kraken_api
-   ```
-   
-   The deployment file for the api is already created: `k8s-services/kraken-api-deployment.yaml`
+    ```bash
+    docker tag kraken_api localhost:32000/kraken_api
+    docker push localhost:32000/kraken_api
+    ```
 
-   Go to the root of the project and create the pods for the api:
-   ```bash
-   kubectl apply -f k8s-services/kraken-api-deployment.yaml
-   ```
+    The deployment file for the api is already created: `k8s-services/kraken-api-deployment.yaml`
 
-   Also create the ClusterIP using:
-   ```bash
-   kubectl apply -f k8s-services/kraken-api-service.yaml
-   ```
+    Go to the root of the project and create the pods for the api:
+    ```bash
+    kubectl apply -f k8s-services/kraken-api-deployment.yaml
+    ```
 
-   To confirm everything is working, type:
-   ```
-   kubectl get svc
-   ```
-   This should print the ip of the clusterIp (kraken-api-service)
-   Navigate to this api in your browser: `[clusterip]:8080/ping`, this should return `{"message":"pong"}`
+    Also create the ClusterIP using:
+    ```bash
+    kubectl apply -f k8s-services/kraken-api-service.yaml
+    ```
+
+    To confirm everything is working, type:
+    ```
+    kubectl get svc
+    ```
+    This should print the ip of the clusterIp (kraken-api-service)
+    Navigate to this api in your browser: `[clusterip]:8080/ping`, this should return `{"message":"pong"}`
 
 ### Load balancer and ingress
 Run the following command
