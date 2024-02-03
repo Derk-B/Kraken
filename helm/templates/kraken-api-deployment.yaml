@@ -32,6 +32,8 @@ spec:
         image: {{ .Values.krakenApiDeployment.krakenApiContainer.image.repository }}:{{
           .Values.krakenApiDeployment.krakenApiContainer.image.tag | default .Chart.AppVersion
           }}
+        imagePullPolicy: {{ .Values.krakenApiDeployment.krakenApiContainer.imagePullPolicy
+          }}
         name: kraken-api-container
         ports:
         - containerPort: 8888

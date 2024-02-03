@@ -3,6 +3,7 @@ krakenApiDeployment:
     image:
       repository: ghcr.io/derk-b/kraken-api
       tag: latest
+    imagePullPolicy: Always
   replicas: 3
 krakenApiService:
   ports:
@@ -12,7 +13,7 @@ krakenApiService:
   type: LoadBalancer
 krakenConfig:
   postgresDb: postgresdb
-  postgresHostname: -postgres-service
+  postgresHostname: postgres-service
   postgresPort: "5432"
   postgresUsername: postgresadmin
 krakenConfigSecret:
@@ -22,6 +23,7 @@ krakenWebDeployment:
     image:
       repository: ghcr.io/derk-b/kraken-web
       tag: latest
+    imagePullPolicy: Always
   replicas: 1
 krakenWebService:
   ports:

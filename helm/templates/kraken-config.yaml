@@ -7,6 +7,6 @@ metadata:
   {{- include "kraken.labels" . | nindent 4 }}
 data:
   POSTGRES_DB: {{ .Values.krakenConfig.postgresDb | quote }}
-  POSTGRES_HOSTNAME: {{ include "kraken.fullname" . }}{{ .Values.krakenConfig.postgresHostname }}
+  POSTGRES_HOSTNAME: {{ include "kraken.fullname" . }}-{{ .Values.krakenConfig.postgresHostname }}
   POSTGRES_PORT: {{ .Values.krakenConfig.postgresPort | quote }}
   POSTGRES_USERNAME: {{ .Values.krakenConfig.postgresUsername | quote }}

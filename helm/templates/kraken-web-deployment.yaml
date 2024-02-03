@@ -24,6 +24,8 @@ spec:
         image: {{ .Values.krakenWebDeployment.krakenWebContainer.image.repository }}:{{
           .Values.krakenWebDeployment.krakenWebContainer.image.tag | default .Chart.AppVersion
           }}
+        imagePullPolicy: {{ .Values.krakenWebDeployment.krakenWebContainer.imagePullPolicy
+          }}
         name: kraken-web-container
         ports:
         - containerPort: 80
