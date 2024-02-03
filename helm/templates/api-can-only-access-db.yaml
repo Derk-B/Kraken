@@ -5,13 +5,13 @@ metadata:
   labels:
   {{- include "kraken.labels" . | nindent 4 }}
 spec:
-  egress:
-  - to:
-    - podSelector:
-        matchLabels:
-          app: postgres
   podSelector:
     matchLabels:
       app: kraken-api
   policyTypes:
   - Egress
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: postgres

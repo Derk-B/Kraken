@@ -1,7 +1,7 @@
 krakenApiDeployment:
   krakenApiContainer:
     image:
-      repository: localhost:32000/kraken_api
+      repository: ghcr.io/derk-b/kraken-api
       tag: latest
   replicas: 3
 krakenApiService:
@@ -12,15 +12,15 @@ krakenApiService:
   type: LoadBalancer
 krakenConfig:
   postgresDb: postgresdb
-  postgresHostname: postgres-service
+  postgresHostname: -postgres-service
   postgresPort: "5432"
   postgresUsername: postgresadmin
 krakenConfigSecret:
-  postgresPassword: ""
+  postgresPassword: "admin123"
 krakenWebDeployment:
   krakenWebContainer:
     image:
-      repository: localhost:32000/kraken_web
+      repository: ghcr.io/derk-b/kraken-web
       tag: latest
   replicas: 1
 krakenWebService:
