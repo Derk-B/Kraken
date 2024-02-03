@@ -8,9 +8,9 @@ spec:
     matchLabels:
       app: postgres
   policyTypes:
-  - Ingress
+    - Ingress
   ingress:
-  - from:
-    - podSelector:
-        matchLabels:
-          app: kraken-api
+    - from:
+        - podSelector:
+            matchLabels:
+              app: kraken-api

@@ -6,7 +6,7 @@ metadata:
     app: kraken-api
   namespace: sandbox
 data:
+  POSTGRES_HOSTNAME: postgres-service
   POSTGRES_PORT: "5432"
   POSTGRES_DB: postgresdb
   POSTGRES_USERNAME: postgresadmin
-  POSTGRES_HOSTNAME: postgres-service

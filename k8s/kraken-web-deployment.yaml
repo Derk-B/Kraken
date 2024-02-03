@@ -17,6 +17,7 @@ spec:
     spec:
       containers:
         - name: kraken-web-container
-          image: localhost:32000/kraken_web:latest
+          image: ghcr.io/derk-b/kraken-web:latest
+          imagePullPolicy: "Always"
           ports:
             - containerPort: 80

@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
         - name: kraken-api-container
-          image: localhost:32000/kraken_api:latest
+          image: ghcr.io/derk-b/kraken-api:latest
+          imagePullPolicy: "Always"
           ports:
             - containerPort: 8888
           envFrom:

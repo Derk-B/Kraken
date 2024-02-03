@@ -1,17 +1,16 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: only-ingress-can-access-api
+  name: api-can-only-access-db
   namespace: sandbox
 spec:
   podSelector:
     matchLabels:
       app: kraken-api
   policyTypes:
-  - Egress
+    - Egress
   egress:
-  - to:
-    - podSelector:
-        matchLabels:
-          app: postgres
-
+    - to:
+        - podSelector:
+            matchLabels:
+              app: postgres

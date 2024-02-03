@@ -8,5 +8,5 @@ spec:
     matchLabels:
       app: kraken-web
   policyTypes:
-  - Egress
+    - Egress
   egress: []
