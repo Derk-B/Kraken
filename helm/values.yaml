@@ -7,10 +7,10 @@ krakenApiDeployment:
   replicas: 3
 krakenApiService:
   ports:
-  - port: 443
+  - port: 80
     protocol: TCP
     targetPort: 8888
-  type: LoadBalancer
+  type: ClusterIP
 krakenConfig:
   postgresDb: postgresdb
   postgresHostname: postgres-service
@@ -27,10 +27,10 @@ krakenWebDeployment:
   replicas: 1
 krakenWebService:
   ports:
-  - port: 443
+  - port: 80
     protocol: TCP
     targetPort: 80
-  type: LoadBalancer
+  type: ClusterIP
 kubernetesClusterDomain: cluster.local
 postgresDeployment:
   postgresContainer:
