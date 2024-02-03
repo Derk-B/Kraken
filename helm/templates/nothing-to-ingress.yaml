@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: {{ include "kraken.fullname" . }}-only-web-can-access-api
+  name: {{ include "kraken.fullname" . }}-nothing-to-ingress
   labels:
   {{- include "kraken.labels" . | nindent 4 }}
 spec:
