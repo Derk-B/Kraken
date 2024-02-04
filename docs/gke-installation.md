@@ -13,9 +13,9 @@ gcloud init
 
 ### Setup clusters on GKE and local `kubectl` connection credentials
 ```bash
-gcloud container clusters create <name-of-your-cluster> --location=us-west1 --num-nodes 1
+gcloud container clusters create <name-of-your-cluster> --location=us-east1 --num-nodes 1
 # Or: if you want to enable network policy enforcement on your cluster
-gcloud container clusters create <name-of-your-cluster> --enable-network-policy --location=us-west1 --num-nodes 1
+gcloud container clusters create <name-of-your-cluster> --enable-network-policy --location=us-east1 --num-nodes 1
 # To check if clusters are properly created
 gcloud container clusters list
 gcloud container clusters get-credentials kraken-cluster --zone us-east1
@@ -40,7 +40,7 @@ helm install kraken-instance helm -n dev
 ```
 will start an Helm install called `kraken-instance` in namespace `dev`.  
 
-_Now you can check the deployments on Google Cloud Console._  
+_Now you can check the deployments on Google Cloud Console, or with other tools of your choice._  
 
 ### (Optional) Setup local domain name and hosts
 Depending on your operating system, you can edit the `hosts` file to achieve optimal testing experience.  

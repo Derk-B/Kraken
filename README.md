@@ -6,7 +6,7 @@ This is the monorepo for Kraken (yet another To-do list web app).
 There are three ways to install and run Kraken.
 1. [With Docker](docs/docker-installation.md)
 2. [With Kubernetes](docs/k8s-installation.md)
-3. [With Helm Chart](docs/helm-chart.md)
+3. [With Helm Chart](docs/helm-chart-installation.md)
 4. [With Google Kubernetes Engine (GKE)](docs/gke-installation.md)
 
 For the presentation, please refer to [Presentation](docs/presentation.md).
