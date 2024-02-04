@@ -40,5 +40,35 @@ helm install kraken-instance helm -n dev
 ```
 will start an Helm install called `kraken-instance` in namespace `dev`.  
 
+_Now you can check the deployments on Google Cloud Console._  
 
-_Now you can check the deployments on Google Cloud Console._
+### (Optional) Setup local domain name and hosts
+Depending on your operating system, you can edit the `hosts` file to achieve optimal testing experience.  
+
+> [!WARNING]  
+> Although the IP address is public, it's not a fixed address, which mean it may not survive over time or
+> across multiple deployments. Therefore, its purpose is mostly for proof-of-concept. 
+
+1. Get public IP address from GKE
+```bash
+kubectl get ingress
+```
+Under the `ADDRESS` column there's your IP of ingress.  
+
+2. Edit your `hosts` file
+For most Linux distributions and macOS, you can edit `/etc/hosts` and add the following content:
+```
+<your-public-ip> kraken.com
+<your-public-ip> api.kraken.com
+```
+
+3. Start the broswer with less strict security policies
+Assuming your browser is `chromium`-based, you need to close all the current browser windows, can launch with:
+```bash
+<path-to-your-browser-binary> --ignore-certificate-errors
+# For example, Google Chrome on Linux
+`which google-chrome` --ignore-certificate-errors
+# Or, Google Chrome on macOS
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --ignore-certificate-errors
+```
+After the browser launches, you can navigate to [https://kraken.com](https://kraken.com). 
