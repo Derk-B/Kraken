@@ -3,8 +3,8 @@ name: Build API Docker image
 on:
   workflow_dispatch:
   push:
-    branches:
-      - "gke"
+    # branches:
+    #   - "gke"
     paths:
       - 'api/**'
       - '.github/workflows/build-api-image.yaml'

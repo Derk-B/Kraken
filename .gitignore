@@ -33,3 +33,4 @@ api-server
 db/
 
 .pre-commit-config.yaml
+docs/presentation.md

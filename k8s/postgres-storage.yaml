@@ -23,8 +23,8 @@ metadata:
   labels:
     app: postgres
 spec:
-  # storageClassName: microk8s-hostpath
-  storageClassName: standard-rwo
+  storageClassName: microk8s-hostpath
+  # storageClassName: standard-rwo
   accessModes:
     - ReadWriteOnce
   resources:
