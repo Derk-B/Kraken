@@ -8,5 +8,3 @@ There are three ways to install and run Kraken.
 2. [With Kubernetes](docs/k8s-installation.md)
 3. [With Helm Chart](docs/helm-chart-installation.md)
 4. [With Google Kubernetes Engine (GKE)](docs/gke-installation.md)
-
-For the presentation, please refer to [Presentation](docs/presentation.md).
