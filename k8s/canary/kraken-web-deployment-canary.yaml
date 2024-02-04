@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kraken-web-deployment
+  name: kraken-web-deployment-canary
   namespace: sandbox
   labels:
     app: kraken-web
 spec:
-  replicas: 10
+  replicas: 1
   selector:
     matchLabels:
       app: kraken-web
-      version: v1.0.0
+      version: v2.0.0
   template:
     metadata:
       labels:
         app: kraken-web
-        version: v1.0.0
+        version: v2.0.0
     spec:
       containers:
         - name: kraken-web-container
