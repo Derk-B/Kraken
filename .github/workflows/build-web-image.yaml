@@ -7,6 +7,7 @@ on:
       - "demo"
     paths:
       - 'web/**'
+      - '.github/workflows/build-web-image.yaml'
 
 env:
   REGISTRY: ghcr.io
@@ -42,7 +43,9 @@ jobs:
         uses: docker/metadata-action@v5.5.1
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: latest
+          tags: |
+            type=sha
+            latest
 
       - name: Build and push
         uses: docker/build-push-action@v5.1.0
